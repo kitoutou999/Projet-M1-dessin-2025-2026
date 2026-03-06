@@ -1,3 +1,5 @@
+package modele;
+
 public class Rectangle implements Forme{
 
 	private Point debut;

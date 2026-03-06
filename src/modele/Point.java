@@ -1,3 +1,5 @@
+package modele;
+
 public class Point{
 
 	private int x;
@@ -17,3 +19,5 @@ public class Point{
 	}
 
 }
+
+

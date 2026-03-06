@@ -1,5 +1,3 @@
-public abstract class Forme{
+package modele;
 
-	
-
-}
+public interface Forme{}
