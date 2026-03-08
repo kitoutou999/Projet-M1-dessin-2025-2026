@@ -1,11 +1,11 @@
-package modele;
+package model;
 
-public class Cercle implements Forme{
+public class Circle implements Shape{
 
 	private Point centre;
 	private int rayon; //Peut être un Point
 	
-	public Cercle(Point centre, int rayon){
+	public Circle(Point centre, int rayon){
 		this.centre = centre;
 		this.rayon = rayon;
 	}
