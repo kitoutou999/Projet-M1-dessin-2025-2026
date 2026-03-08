@@ -6,33 +6,33 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Controller {
-    private GameModel modele;
-    private MainView vue;
+    private GameModel model;
+    private MainView view;
 
-    public Controller(GameModel modele, MainView vue) {
-        this.modele = modele;
-        this.vue = vue;
+    public Controller(GameModel model, MainView view) {
+        this.model = model;
+        this.view = view;
 
-        this.vue.getZoneDessin().addMouseListener(new MouseAdapter() {
+        this.view.getDrawingCanvas().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 System.out.println("Click " + e.getX() + " " + e.getY());
             }
         });
 
-        this.vue.getBarreOutils().getBtnCercle().addActionListener(e -> {
+        this.view.getToolbar().getBtnCircle().addActionListener(e -> {
             System.out.println("Cercle");
         });
 
-        this.vue.getBarreOutils().getBtnRectangle().addActionListener(e -> {
+        this.view.getToolbar().getBtnRectangle().addActionListener(e -> {
             System.out.println("Rectangle");
         });
 
-        this.vue.getBarreOutils().getBtnUndo().addActionListener(e -> {
+        this.view.getToolbar().getBtnUndo().addActionListener(e -> {
             System.out.println("Undo");
         });
 
-        this.vue.getBarreOutils().getBtnRedo().addActionListener(e -> {
+        this.view.getToolbar().getBtnRedo().addActionListener(e -> {
             System.out.println("Redo");
         });
     }

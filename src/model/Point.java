@@ -18,19 +18,19 @@ public class Point{
 		return this.y;
 	}
 	
-	public void translation(int dx, int dy){
+	public void translate(int dx, int dy){
 		this.x = this.x + dx;
 		this.y = this.y + dy;
 	}
 	
-	public void homothetie(Point centre, int k){
-		this.x = centre.getX() + k * (this.x - centre.getX());
-		this.y = centre.getY() + k * (this.y - centre.getY());
+	public void scale(Point center, int k){
+		this.x = center.getX() + k * (this.x - center.getX());
+		this.y = center.getY() + k * (this.y - center.getY());
 	}
 	
-	public void homothetie(int centreX, int centreY, int k){
-		this.x = centreX + k * (this.x - centreX);
-		this.y = centreY + k * (this.y - centreY);
+	public void scale(int centerX, int centerY, int k){
+		this.x = centerX + k * (this.x - centerX);
+		this.y = centerY + k * (this.y - centerY);
 	}
 
 	public String toString(){

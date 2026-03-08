@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class MainView extends JFrame implements Observer {
     private GameModel model;
-    private DrawingCanvas zoneDessin;
-    private Toolbar barreOutils;
+    private DrawingCanvas drawingCanvas;
+    private Toolbar toolbar;
 
     public MainView(GameModel model) {
         this.model = model;
@@ -18,26 +18,26 @@ public class MainView extends JFrame implements Observer {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
-        this.zoneDessin = new DrawingCanvas(model);
-        this.barreOutils = new Toolbar();
+        this.drawingCanvas = new DrawingCanvas(model);
+        this.toolbar = new Toolbar();
 
-        this.add(barreOutils, BorderLayout.NORTH);
-        this.add(zoneDessin, BorderLayout.CENTER);
+        this.add(toolbar, BorderLayout.NORTH);
+        this.add(drawingCanvas, BorderLayout.CENTER);
 
         this.pack();
         this.setLocationRelativeTo(null);
     }
 
-    public DrawingCanvas getZoneDessin() {
-        return zoneDessin;
+    public DrawingCanvas getDrawingCanvas() {
+        return drawingCanvas;
     }
 
-    public Toolbar getBarreOutils() {
-        return barreOutils;
+    public Toolbar getToolbar() {
+        return toolbar;
     }
 
     @Override
     public void update() {
-        this.zoneDessin.repaint();
+        this.drawingCanvas.repaint();
     }
 }

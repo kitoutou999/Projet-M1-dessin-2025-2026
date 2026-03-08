@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Toolbar extends JPanel {
-    private JButton btnCercle;
+    private JButton btnCircle;
     private JButton btnRectangle;
     private JButton btnUndo;
     private JButton btnRedo;
@@ -12,25 +12,25 @@ public class Toolbar extends JPanel {
     public Toolbar() {
         this.setLayout(new BorderLayout());
 
-        JPanel panGauche = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panGauche.setOpaque(false);
-        btnCercle = new JButton("Cercle");
+        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        leftPanel.setOpaque(false);
+        btnCircle = new JButton("Cercle");
         btnRectangle = new JButton("Rectangle");
-        panGauche.add(btnCercle);
-        panGauche.add(btnRectangle);
+        leftPanel.add(btnCircle);
+        leftPanel.add(btnRectangle);
 
-        JPanel panDroite = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panDroite.setOpaque(false);
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightPanel.setOpaque(false);
         btnUndo = new JButton("Undo");
         btnRedo = new JButton("Redo");
-        panDroite.add(btnUndo);
-        panDroite.add(btnRedo);
+        rightPanel.add(btnUndo);
+        rightPanel.add(btnRedo);
 
-        this.add(panGauche, BorderLayout.WEST);
-        this.add(panDroite, BorderLayout.EAST);
+        this.add(leftPanel, BorderLayout.WEST);
+        this.add(rightPanel, BorderLayout.EAST);
     }
 
-    public JButton getBtnCercle() { return btnCercle; }
+    public JButton getBtnCircle() { return btnCircle; }
     public JButton getBtnRectangle() { return btnRectangle; }
     public JButton getBtnUndo() { return btnUndo; }
     public JButton getBtnRedo() { return btnRedo; }

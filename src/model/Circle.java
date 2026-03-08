@@ -2,20 +2,20 @@ package model;
 
 public class Circle implements Shape{
 
-	private Point centre;
-	private int rayon; //Peut être un Point
+	private Point center;
+	private int radius;
 	
-	public Circle(Point centre, int rayon){
-		this.centre = centre;
-		this.rayon = rayon;
+	public Circle(Point center, int radius){
+		this.center = center;
+		this.radius = radius;
 	}
 	
-	public Point getCentre(){
-		return this.centre;
+	public Point getCenter(){
+		return this.center;
 	}
 	
-	public int getRayon(){
-		return this.rayon;
+	public int getRadius(){
+		return this.radius;
 	}
 
 }
