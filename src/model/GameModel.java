@@ -6,10 +6,20 @@ import java.util.List;
 public class GameModel extends Observable {
     private List<Shape> redShapes;
     private List<Shape> blueShapes;
+    private ShapeType currentShapeType;
 
     public GameModel() {
         this.redShapes = new ArrayList<>();
         this.blueShapes = new ArrayList<>();
+        this.currentShapeType = ShapeType.CIRCLE;
+    }
+
+    public ShapeType getCurrentShapeType() {
+        return currentShapeType;
+    }
+
+    public void setCurrentShapeType(ShapeType currentShapeType) {
+        this.currentShapeType = currentShapeType;
     }
 
     public List<Shape> getRedShapes() {
@@ -21,10 +31,8 @@ public class GameModel extends Observable {
     }
 
     public void addBlueShape(Shape f) {
-        if (blueShapes.size() < 4) {
-            blueShapes.add(f);
-            notifyObservers();
-        }
+        blueShapes.add(f);
+        notifyObservers();
     }
 
     public void addRedShape(Shape f) {
