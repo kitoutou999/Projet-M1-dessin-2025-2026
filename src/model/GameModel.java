@@ -30,6 +30,10 @@ public class GameModel extends Observable {
         return blueShapes;
     }
 
+    public int getScore(){
+        return blueShapes.size();
+    }
+
     public void addBlueShape(Shape f) {
         blueShapes.add(f);
         notifyObservers();

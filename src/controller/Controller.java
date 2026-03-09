@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 public class Controller {
     private GameModel model;
     private MainView view;
+    private Point firstClickPoint = null;
 
     public Controller(GameModel model, MainView view) {
         this.model = model;
@@ -20,18 +21,32 @@ public class Controller {
         this.view.getDrawingCanvas().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                int x = e.getX();
-                int y = e.getY();
-                Point clickPoint = new Point(x, y);
-
-                if (model.getCurrentShapeType() == ShapeType.CIRCLE) {
-                    model.addBlueShape(new Circle(clickPoint, 30));
-                    System.out.println("Blue Circle placed at " + x + "," + y);
-                } else if (model.getCurrentShapeType() == ShapeType.RECTANGLE) {
-                    Point endPoint = new Point(x + 50, y + 50);
-                    model.addBlueShape(new Rectangle(clickPoint, endPoint));
-                    System.out.println("Blue Rectangle placed at " + x + "," + y);
+                
+                if (firstClickPoint == null){
+                    int x = e.getX();
+                    int y = e.getY();
+                    firstClickPoint = new Point(x, y);
+                    System.out.println("FirstClick NULL");
                 }
+
+                else {
+                    int x = e.getX();
+                    int y = e.getY();
+                    Point secondClickPoint = new Point(x, y);
+
+                    if (model.getCurrentShapeType() == ShapeType.CIRCLE) {
+                        int rayon = (int) Math.sqrt(Math.pow(secondClickPoint.getX() - firstClickPoint.getX(), 2) + Math.pow(secondClickPoint.getY() - firstClickPoint.getY(), 2));
+                        model.addBlueShape(new Circle(firstClickPoint, rayon));
+                        System.out.println("Blue Circle placed at " + x + "," + y);
+                    } else if (model.getCurrentShapeType() == ShapeType.RECTANGLE) {
+                        model.addBlueShape(new Rectangle(firstClickPoint, secondClickPoint));
+                        System.out.println("Blue Rectangle placed at " + x + "," + y);
+                    }
+
+                    firstClickPoint = null;
+                    System.out.println("FirstClick PAS NULL");
+                }
+
             }
         });
 

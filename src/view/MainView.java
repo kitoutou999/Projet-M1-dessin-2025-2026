@@ -39,5 +39,6 @@ public class MainView extends JFrame implements Observer {
     @Override
     public void update() {
         this.drawingCanvas.repaint();
+        this.toolbar.updateScore(model.getScore()); 
     }
 }
