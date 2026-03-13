@@ -10,6 +10,10 @@ public class Toolbar extends JPanel {
     private JButton btnRedo;
     private JLabel scoreText;
     private JLabel currentScoreText;
+    private JToggleButton btnDraw;
+    private JToggleButton btnScale;
+    private JToggleButton btnMove;
+    private JToggleButton btnRemove;
 
     public Toolbar() {
         this.setLayout(new BorderLayout());
@@ -23,8 +27,24 @@ public class Toolbar extends JPanel {
 
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightPanel.setOpaque(false);
+        btnDraw = new JToggleButton("Draw");
+        btnScale = new JToggleButton("Scale");
+        btnMove = new JToggleButton("Move");
+        btnRemove = new JToggleButton("Remove");
+        ButtonGroup modeGroup = new ButtonGroup();
+        modeGroup.add(btnDraw);
+        modeGroup.add(btnMove);
+        modeGroup.add(btnScale);
+        modeGroup.add(btnRemove);
+        btnDraw.setSelected(true);
+
         btnUndo = new JButton("Undo");
         btnRedo = new JButton("Redo");
+        rightPanel.add(btnDraw);
+        rightPanel.add(btnScale);
+        rightPanel.add(btnMove);
+        rightPanel.add(btnRemove);
+        rightPanel.add(Box.createHorizontalStrut(10));
         rightPanel.add(btnUndo);
         rightPanel.add(btnRedo);
 
@@ -49,4 +69,8 @@ public class Toolbar extends JPanel {
     public JButton getBtnRectangle() { return btnRectangle; }
     public JButton getBtnUndo() { return btnUndo; }
     public JButton getBtnRedo() { return btnRedo; }
+    public JToggleButton getBtnDraw() { return btnDraw; }
+    public JToggleButton getBtnScale() { return btnScale; }
+    public JToggleButton getBtnMove() { return btnMove; }
+    public JToggleButton getBtnRemove() { return btnRemove; }
 }

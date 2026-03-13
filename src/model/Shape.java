@@ -1,3 +1,3 @@
 package model;
 
-public interface Shape{}
+public abstract class Shape extends Observable{}

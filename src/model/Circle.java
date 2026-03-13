@@ -1,6 +1,6 @@
 package model;
 
-public class Circle implements Shape{
+public class Circle extends Shape{
 
 	private Point center;
 	private int radius;
@@ -16,6 +16,16 @@ public class Circle implements Shape{
 	
 	public int getRadius(){
 		return this.radius;
+	}
+
+	public void setCenter(Point center) {
+		this.center = center;
+		notifyObservers();
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+		notifyObservers();
 	}
 
 }
