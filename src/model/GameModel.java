@@ -64,11 +64,11 @@ public class GameModel extends Observable {
             if(shape2.getClass() == Circle.class){
                 r1 = (Rectangle) shape1;
                 c2 = (Circle) shape2;
-                return collisionRectangleRectangle(r1,r2);
+                return collisionRectangleCircle(r1,c2);
             }else if(shape2.getClass() == Rectangle.class){
                 r1 = (Rectangle) shape1;
                 r2 = (Rectangle) shape2;
-                return collisionRectangleCircle(r1,c2);
+                return collisionRectangleRectangle(r1,r2);
             }
         }
         return false;
@@ -82,26 +82,28 @@ public class GameModel extends Observable {
     }
     
     public boolean collisionRectangleCircle(Rectangle r,Circle c){
-        int weight = Math.abs(r.getEnd().getX() - r.getStart().getX());
-        int height = Math.abs(r.getStart().getY() - r.getEnd().getY());
-        int closestX = Math.max(r.getEnd().getX(), Math.min(c.getCenter().getX(), r.getEnd().getX() + weight));
-        int closestY = Math.max(r.getEnd().getY(), Math.min(c.getCenter().getY(), r.getEnd().getY() + height));
-        int dx = c.getCenter().getX() - closestX;
-        int dy = c.getCenter().getY() - closestY;
-        int dxxyy = dx*dx + dy*dy;
+        int minX = r.getStart().getX();
+        int maxX = r.getEnd().getX();
+        int minY = r.getStart().getY();
+        int maxY = r.getEnd().getY();
 
-        if(dxxyy < Math.pow(c.getRadius(),2)){
-            return true;
-        }else{
-            return false;
-        }
+        int cx = c.getCenter().getX();
+        int cy = c.getCenter().getY();
+
+        int closestX = Math.max(minX, Math.min(cx, maxX));
+        int closestY = Math.max(minY, Math.min(cy, maxY));
+
+        int dx = cx - closestX;
+        int dy = cy - closestY;
+
+        return dx*dx + dy*dy <= c.getRadius()*c.getRadius();
     }
 
     public boolean collisionRectangleRectangle(Rectangle r1,Rectangle r2){
         if (r1.getEnd().getX() < r2.getStart().getX() ||
             r1.getStart().getX() > r2.getEnd().getX() ||
-            r1.getStart().getY() < r2.getEnd().getY() ||
-            r1.getEnd().getY() > r2.getStart().getY()) {
+            r1.getStart().getY() > r2.getEnd().getY() ||
+            r1.getEnd().getY() < r2.getStart().getY()) {
                 return false;
             }
         return true;
