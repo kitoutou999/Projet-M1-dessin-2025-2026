@@ -63,11 +63,13 @@ public class Controller {
                         }
                         selectedShape = null;
                         view.getDrawingCanvas().clearGizmo();
-                    }else if (selectedShape instanceof Circle){
-                        Circle c = (Circle) selectedShape;
-                        int gizmoX = c.getCenter().getX() + (int)(c.getRadius() * Math.cos(90));
-                        int gizmoY = c.getCenter().getY() + (int)(c.getRadius() * Math.sin(90));
-                        view.getDrawingCanvas().createGizmo( new Rectangle(new Point(gizmoX-5, gizmoY-5), new Point(gizmoX+5, gizmoY+5)));
+                    } else if (selectedShape instanceof Circle) {
+                        if (view.getDrawingCanvas().isCircleGizmoAt(x, y)) {
+                            draggedGizmoCorner = ((Circle) selectedShape).getCenter();
+                            return;
+                        }
+                        selectedShape = null;
+                        view.getDrawingCanvas().clearGizmo();
                     }
                     Shape shapeToScale = model.getShapeAt(clickPoint);
                     if (shapeToScale instanceof Rectangle) {
@@ -75,13 +77,15 @@ public class Controller {
                         view.getDrawingCanvas().createGizmo(shapeToScale);
                     } else if (shapeToScale instanceof Circle) {
                         selectedShape = shapeToScale;
-                        Circle c = (Circle) selectedShape;
-                        view.getDrawingCanvas().createGizmo(c);
-
+                        view.getDrawingCanvas().createGizmo(shapeToScale);
                     }
                 } else if (model.getCurrentMode() == Mode.REMOVE) {
                     Shape shapeToRemove = model.getShapeAt(clickPoint);
                     if (shapeToRemove != null) {
+                        if (shapeToRemove.equals(selectedShape)) {
+                            selectedShape = null;
+                            view.getDrawingCanvas().clearGizmo();
+                        }
                         model.removeBlueShape(shapeToRemove);
                     }
 
@@ -110,6 +114,12 @@ public class Controller {
                         view.getDrawingCanvas().setPreviewShape(null, true);
                         draggedGizmoCorner = null;
                         fixedGizmoCorner = null;
+                    } else if (draggedGizmoCorner != null && selectedShape instanceof Circle) {
+                        Circle c = (Circle) selectedShape;
+                        model.resizeCircle(c, c.getCenter(), new Point(e.getX(), e.getY()));
+                        view.getDrawingCanvas().createGizmo(selectedShape);
+                        view.getDrawingCanvas().setPreviewShape(null, true);
+                        draggedGizmoCorner = null;
                     }
                 }
             }
@@ -140,6 +150,12 @@ public class Controller {
                 } else if (model.getCurrentMode() == Mode.SCALE) {
                     if (draggedGizmoCorner != null && selectedShape instanceof Rectangle) {
                         Rectangle preview = new Rectangle(fixedGizmoCorner, currentPoint);
+                        view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview, selectedShape));
+                        view.getDrawingCanvas().createGizmo(preview);
+                    } else if (draggedGizmoCorner != null && selectedShape instanceof Circle) {
+                        Circle c = (Circle) selectedShape;
+                        int newRadius = (int) Math.sqrt(Math.pow(currentPoint.getX() - c.getCenter().getX(), 2) + Math.pow(currentPoint.getY() - c.getCenter().getY(), 2));
+                        Circle preview = new Circle(c.getCenter(), newRadius);
                         view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview, selectedShape));
                         view.getDrawingCanvas().createGizmo(preview);
                     }
@@ -180,6 +196,7 @@ public class Controller {
         this.view.getToolbar().getBtnDraw().addActionListener(e -> {
             JToggleButton btn = (JToggleButton) e.getSource();
             if (btn.isSelected()) {
+                resetSelection();
                 model.setCurrentMode(Mode.DRAW);
                 System.out.println("Mode : Draw");
             }
@@ -187,6 +204,7 @@ public class Controller {
         this.view.getToolbar().getBtnMove().addActionListener(e -> {
             JToggleButton btn = (JToggleButton) e.getSource();
             if (btn.isSelected()) {
+                resetSelection();
                 model.setCurrentMode(Mode.TRANSLATE);
                 System.out.println("Mode : Move");
             }
@@ -194,6 +212,7 @@ public class Controller {
         this.view.getToolbar().getBtnScale().addActionListener(e -> {
             JToggleButton btn = (JToggleButton) e.getSource();
             if (btn.isSelected()) {
+                resetSelection();
                 model.setCurrentMode(Mode.SCALE);
                 System.out.println("Mode : Scale");
             }
@@ -201,17 +220,27 @@ public class Controller {
         this.view.getToolbar().getBtnRemove().addActionListener(e -> {
             JToggleButton btn = (JToggleButton) e.getSource();
             if (btn.isSelected()) {
+                resetSelection();
                 model.setCurrentMode(Mode.REMOVE);
                 System.out.println("Mode : Remove");
             }
         });
 
         this.view.getToolbar().getBtnUndo().addActionListener(e -> {
+
             System.out.println("Undo");
         });
 
         this.view.getToolbar().getBtnRedo().addActionListener(e -> {
             System.out.println("Redo");
         });
+    }
+
+    private void resetSelection() {
+        selectedShape = null;
+        draggedGizmoCorner = null;
+        fixedGizmoCorner = null;
+        view.getDrawingCanvas().clearGizmo();
+        view.getDrawingCanvas().setPreviewShape(null, true);
     }
 }

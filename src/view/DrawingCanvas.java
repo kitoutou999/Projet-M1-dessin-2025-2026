@@ -67,6 +67,21 @@ public class DrawingCanvas extends JPanel {
         repaint();
     }
 
+    public boolean isCircleGizmoAt(int px, int py) {
+        if (!(gizmoShape instanceof Circle)) return false;
+        for (int[] h : getCircleGizmoHandles()) {
+            if (Math.abs(px - h[0]) <= 5 && Math.abs(py - h[1]) <= 5) return true;
+        }
+        return false;
+    }
+
+    // (droite, haut, gauche, bas)
+    private int[][] getCircleGizmoHandles() {
+        Circle c = (Circle) gizmoShape;
+        int cx = c.getCenter().getX(), cy = c.getCenter().getY(), r = c.getRadius();
+        return new int[][]{{cx + r, cy}, {cx, cy - r}, {cx - r, cy}, {cx, cy + r}};
+    }
+
     //(0=TL,1=TR,2=BL,3=BR) ou -1 si aucun
     public int getGizmoIndexAt(int px, int py) {
         if (!(gizmoShape instanceof Rectangle)) return -1;
@@ -112,16 +127,21 @@ public class DrawingCanvas extends JPanel {
     }
 
     private void drawGizmo(Graphics g) {
-        if (!(gizmoShape instanceof Rectangle)) return;
-        Rectangle r = (Rectangle) gizmoShape;
-        int x = Math.min(r.getStart().getX(), r.getEnd().getX());
-        int y = Math.min(r.getStart().getY(), r.getEnd().getY());
-        int w = Math.abs(r.getStart().getX() - r.getEnd().getX());
-        int h = Math.abs(r.getStart().getY() - r.getEnd().getY());
         g.setColor(Color.MAGENTA);
-        g.drawRect(x - 5, y - 5, 10, 10);
-        g.drawRect(x + w - 5, y - 5, 10, 10);
-        g.drawRect(x - 5, y + h - 5, 10, 10);
-        g.drawRect(x + w - 5, y + h - 5, 10, 10);
+        if (gizmoShape instanceof Rectangle) {
+            Rectangle r = (Rectangle) gizmoShape;
+            int x = r.getMinX();
+            int y = r.getMinY();
+            int w = r.getMaxX() - x;
+            int h = r.getMaxY() - y;
+            g.drawRect(x - 5, y - 5, 10, 10);
+            g.drawRect(x + w - 5, y - 5, 10, 10);
+            g.drawRect(x - 5, y + h - 5, 10, 10);
+            g.drawRect(x + w - 5, y + h - 5, 10, 10);
+        } else if (gizmoShape instanceof Circle) {
+            for (int[] h : getCircleGizmoHandles()) {
+                g.drawRect(h[0] - 5, h[1] - 5, 10, 10);
+            }
+        }
     }
 }
