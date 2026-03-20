@@ -36,6 +36,7 @@ public class DrawingCanvas extends JPanel {
             Circle c = (Circle) s;
             int r = c.getRadius();
             g.drawOval(c.getCenter().getX() - r, c.getCenter().getY() - r, 2 * r, 2 * r);
+            g.fillOval(c.getCenter().getX() - r, c.getCenter().getY() - r, 2 * r, 2 * r);
         } else if (s instanceof Rectangle) {
             Rectangle r = (Rectangle) s;
             int x = Math.min(r.getStart().getX(), r.getEnd().getX());
@@ -43,6 +44,7 @@ public class DrawingCanvas extends JPanel {
             int w = Math.abs(r.getStart().getX() - r.getEnd().getX());
             int h = Math.abs(r.getStart().getY() - r.getEnd().getY());
             g.drawRect(x, y, w, h);
+            g.fillRect(x, y, w, h);
         }
     }
 }
