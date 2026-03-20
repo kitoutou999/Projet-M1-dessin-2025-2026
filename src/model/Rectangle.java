@@ -28,4 +28,9 @@ public class Rectangle extends Shape{
 		notifyObservers();
 	}
 
+	public int getMinX() { return Math.min(start.getX(), end.getX()); }
+	public int getMaxX() { return Math.max(start.getX(), end.getX()); }
+	public int getMinY() { return Math.min(start.getY(), end.getY()); }
+	public int getMaxY() { return Math.max(start.getY(), end.getY()); }
+
 }
