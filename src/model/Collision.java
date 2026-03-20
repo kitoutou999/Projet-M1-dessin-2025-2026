@@ -42,10 +42,10 @@ public class Collision{
     }
 
     public static boolean collisionRectangleCircle(Rectangle r,Circle c){
-        int minX = r.getStart().getX();
-        int maxX = r.getEnd().getX();
-        int minY = r.getStart().getY();
-        int maxY = r.getEnd().getY();
+        int minX = Math.min(r.getStart().getX(), r.getEnd().getX());
+        int maxX = Math.max(r.getStart().getX(), r.getEnd().getX());
+        int minY = Math.min(r.getStart().getY(), r.getEnd().getY());
+        int maxY = Math.max(r.getStart().getY(), r.getEnd().getY());
 
         int cx = c.getCenter().getX();
         int cy = c.getCenter().getY();
@@ -60,12 +60,19 @@ public class Collision{
     }
 
     public static boolean collisionRectangleRectangle(Rectangle r1,Rectangle r2){
-        if (r1.getEnd().getX() < r2.getStart().getX() ||
-            r1.getStart().getX() > r2.getEnd().getX() ||
-            r1.getStart().getY() > r2.getEnd().getY() ||
-            r1.getEnd().getY() < r2.getStart().getY()) {
-                return false;
-            }
+        int r1minX = Math.min(r1.getStart().getX(), r1.getEnd().getX());
+        int r1maxX = Math.max(r1.getStart().getX(), r1.getEnd().getX());
+        int r1minY = Math.min(r1.getStart().getY(), r1.getEnd().getY());
+        int r1maxY = Math.max(r1.getStart().getY(), r1.getEnd().getY());
+
+        int r2minX = Math.min(r2.getStart().getX(), r2.getEnd().getX());
+        int r2maxX = Math.max(r2.getStart().getX(), r2.getEnd().getX());
+        int r2minY = Math.min(r2.getStart().getY(), r2.getEnd().getY());
+        int r2maxY = Math.max(r2.getStart().getY(), r2.getEnd().getY());
+
+        if (r1maxX < r2minX || r1minX > r2maxX || r1minY > r2maxY || r1maxY < r2minY) {
+            return false;
+        }
         return true;
     }
 }

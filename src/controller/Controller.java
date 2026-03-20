@@ -135,12 +135,12 @@ public class Controller {
                         } else {
                             return;
                         }
-                        view.getDrawingCanvas().setPreviewShape(previewShape, !model.isIntersecting(previewShape));
+                        view.getDrawingCanvas().setPreviewShape(previewShape, !model.isIntersecting(previewShape, selectedShape));
                     }
                 } else if (model.getCurrentMode() == Mode.SCALE) {
                     if (draggedGizmoCorner != null && selectedShape instanceof Rectangle) {
                         Rectangle preview = new Rectangle(fixedGizmoCorner, currentPoint);
-                        view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview));
+                        view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview, selectedShape));
                         view.getDrawingCanvas().createGizmo(preview);
                     }
                 }
