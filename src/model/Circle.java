@@ -18,4 +18,9 @@ public class Circle implements Shape{
 		return this.radius;
 	}
 
+	public int getScoreFromShape(){
+		double score = Math.PI * (this.radius * this.radius);
+		return (int)score;
+	}
+
 }

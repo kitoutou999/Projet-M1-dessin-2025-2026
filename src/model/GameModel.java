@@ -31,7 +31,13 @@ public class GameModel extends Observable {
     }
 
     public int getScore(){
-        return blueShapes.size();
+        int score = 0;
+        for(int i = 0;i<this.blueShapes.size();i++){
+            if(this.wellPlacedForm(this.blueShapes.get(i))){
+                score = score + this.blueShapes.get(i).getScoreFromShape();
+            }
+        }
+        return score;
     }
 
     public void addBlueShape(Shape f) {
@@ -115,6 +121,14 @@ public class GameModel extends Observable {
                 return false;
             }
         }
+        for(int i = 0;i<this.blueShapes.size();i++){
+            if(this.collisionBetween(s1,this.blueShapes.get(i))){
+                if(!this.blueShapes.get(i).equals(s1)){
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
 }

@@ -30,4 +30,9 @@ public class Rectangle implements Shape{
 		return this.end;
 	}
 
+	public int getScoreFromShape(){
+		int score = (this.end.getX()-this.start.getX())*(this.end.getY()-this.start.getY());
+		return score;
+	}
+
 }
