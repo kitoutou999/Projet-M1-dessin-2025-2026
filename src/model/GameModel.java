@@ -22,6 +22,11 @@ public class GameModel extends Observable {
                 return true;
             }
         }
+        for (Shape shape : blueShapes) {
+            if (!shape.equals(newShape) && Intersection.checkIntersection(shape, newShape)) {
+                return true;
+            }
+        }
         return false;
     }
 

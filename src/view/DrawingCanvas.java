@@ -23,12 +23,15 @@ public class DrawingCanvas extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+        Graphics2D g2D = (Graphics2D) g;
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+        g2D.setComposite(ac);
+
         g.setColor(Color.RED);
         for (Shape s : model.getRedShapes()) {
             drawShape(g, s);
         }
-        
+
         g.setColor(Color.BLUE);
         for (Shape s : model.getBlueShapes()) {
             drawShape(g, s);
@@ -96,6 +99,7 @@ public class DrawingCanvas extends JPanel {
             Circle c = (Circle) s;
             int r = c.getRadius();
             g.drawOval(c.getCenter().getX() - r, c.getCenter().getY() - r, 2 * r, 2 * r);
+            g.fillOval(c.getCenter().getX() - r, c.getCenter().getY() - r, 2 * r, 2 * r);
         } else if (s instanceof Rectangle) {
             Rectangle r = (Rectangle) s;
             int x = Math.min(r.getStart().getX(), r.getEnd().getX());
@@ -103,6 +107,7 @@ public class DrawingCanvas extends JPanel {
             int w = Math.abs(r.getStart().getX() - r.getEnd().getX());
             int h = Math.abs(r.getStart().getY() - r.getEnd().getY());
             g.drawRect(x, y, w, h);
+            g.fillRect(x, y, w, h);
         }
     }
 
