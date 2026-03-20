@@ -65,6 +65,11 @@ public class GameModel extends Observable {
         r.setEnd(new Point(Math.max(corner1.getX(), corner2.getX()), Math.max(corner1.getY(), corner2.getY())));
         notifyObservers();
     }
+    public void resizeCircle(Circle c, Point center, Point edge) {
+        int newRadius = (int) Math.sqrt(Math.pow(edge.getX() - center.getX(), 2) + Math.pow(edge.getY() - center.getY(), 2));
+        c.setRadius(newRadius);
+        notifyObservers();
+    }
 
 
 

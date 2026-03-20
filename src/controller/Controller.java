@@ -63,11 +63,21 @@ public class Controller {
                         }
                         selectedShape = null;
                         view.getDrawingCanvas().clearGizmo();
+                    }else if (selectedShape instanceof Circle){
+                        Circle c = (Circle) selectedShape;
+                        int gizmoX = c.getCenter().getX() + (int)(c.getRadius() * Math.cos(90));
+                        int gizmoY = c.getCenter().getY() + (int)(c.getRadius() * Math.sin(90));
+                        view.getDrawingCanvas().createGizmo( new Rectangle(new Point(gizmoX-5, gizmoY-5), new Point(gizmoX+5, gizmoY+5)));
                     }
                     Shape shapeToScale = model.getShapeAt(clickPoint);
                     if (shapeToScale instanceof Rectangle) {
                         selectedShape = shapeToScale;
                         view.getDrawingCanvas().createGizmo(shapeToScale);
+                    } else if (shapeToScale instanceof Circle) {
+                        selectedShape = shapeToScale;
+                        Circle c = (Circle) selectedShape;
+                        view.getDrawingCanvas().createGizmo(c);
+
                     }
                 } else if (model.getCurrentMode() == Mode.REMOVE) {
                     Shape shapeToRemove = model.getShapeAt(clickPoint);
