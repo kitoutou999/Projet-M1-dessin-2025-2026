@@ -19,6 +19,9 @@ public class DrawingCanvas extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2D=(Graphics2D) g;
+        AlphaComposite ac = AlphaComposite.getInstance( AlphaComposite.SRC_OVER, 0.5f );
+        g2D.setComposite( ac );
         
         g.setColor(Color.RED);
         for (Shape s : model.getRedShapes()) {
