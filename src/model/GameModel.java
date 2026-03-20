@@ -18,12 +18,12 @@ public class GameModel extends Observable {
 
     public boolean isIntersecting(Shape newShape) {
         for (Shape shape : redShapes) {
-            if (Intersection.checkIntersection(shape, newShape)) {
+            if (Collision.collisionBetween(shape, newShape)) {
                 return true;
             }
         }
         for (Shape shape : blueShapes) {
-            if (!shape.equals(newShape) && Intersection.checkIntersection(shape, newShape)) {
+            if (!shape.equals(newShape) && Collision.collisionBetween(shape, newShape)) {
                 return true;
             }
         }
