@@ -1,0 +1,56 @@
+package controller;
+
+import model.*;
+import view.MainView;
+import java.awt.event.MouseEvent;
+
+public class TranslateState implements ControllerState {
+    private GameModel model;
+    private MainView view;
+    private Shape selectedShape = null;
+    private Point clickPoint = null;
+
+    public TranslateState(GameModel model, MainView view) {
+        this.model = model;
+        this.view = view;
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        clickPoint = new Point(e.getX(), e.getY());
+        selectedShape = model.getShapeAt(clickPoint);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (selectedShape == null) return;
+        Point releasePoint = new Point(e.getX(), e.getY());
+        int dx = releasePoint.getX() - clickPoint.getX();
+        int dy = releasePoint.getY() - clickPoint.getY();
+        model.translateShape(selectedShape, dx, dy);
+        selectedShape = null;
+        view.getDrawingCanvas().setPreviewShape(null, true);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        if (selectedShape == null) return;
+        Point currentPoint = new Point(e.getX(), e.getY());
+        int dx = currentPoint.getX() - clickPoint.getX();
+        int dy = currentPoint.getY() - clickPoint.getY();
+        Shape preview;
+        if (selectedShape instanceof Circle) {
+            Circle c = (Circle) selectedShape;
+            preview = new Circle(new Point(c.getCenter().getX() + dx, c.getCenter().getY() + dy), c.getRadius());
+        } else if (selectedShape instanceof Rectangle) {
+            Rectangle r = (Rectangle) selectedShape;
+            preview = new Rectangle(new Point(r.getStart().getX() + dx, r.getStart().getY() + dy), new Point(r.getEnd().getX() + dx, r.getEnd().getY() + dy));
+        } else {
+            return;
+        }
+        view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview, selectedShape));
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {}
+}

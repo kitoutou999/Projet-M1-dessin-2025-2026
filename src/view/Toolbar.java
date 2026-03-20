@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Toolbar extends JPanel {
-    private JButton btnCircle;
-    private JButton btnRectangle;
+    private JToggleButton btnCircle;
+    private JToggleButton btnRectangle;
     private JButton btnUndo;
     private JButton btnRedo;
     private JLabel scoreText;
@@ -20,8 +20,12 @@ public class Toolbar extends JPanel {
 
         JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftPanel.setOpaque(false);
-        btnCircle = new JButton("Cercle");
-        btnRectangle = new JButton("Rectangle");
+        btnCircle = new JToggleButton("Cercle");
+        btnRectangle = new JToggleButton("Rectangle");
+        ButtonGroup shapeGroup = new ButtonGroup();
+        shapeGroup.add(btnCircle);
+        shapeGroup.add(btnRectangle);
+        btnCircle.setSelected(true);
         leftPanel.add(btnCircle);
         leftPanel.add(btnRectangle);
 
@@ -65,8 +69,8 @@ public class Toolbar extends JPanel {
         currentScoreText.setText(String.valueOf(newScore));
     }
 
-    public JButton getBtnCircle() { return btnCircle; }
-    public JButton getBtnRectangle() { return btnRectangle; }
+    public JToggleButton getBtnCircle() { return btnCircle; }
+    public JToggleButton getBtnRectangle() { return btnRectangle; }
     public JButton getBtnUndo() { return btnUndo; }
     public JButton getBtnRedo() { return btnRedo; }
     public JToggleButton getBtnDraw() { return btnDraw; }
