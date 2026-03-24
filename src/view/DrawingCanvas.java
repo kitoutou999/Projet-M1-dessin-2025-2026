@@ -67,37 +67,11 @@ public class DrawingCanvas extends JPanel {
         repaint();
     }
 
-    public boolean isCircleGizmoAt(int px, int py) {
-        if (!(gizmoShape instanceof Circle)) return false;
-        for (int[] h : getCircleGizmoHandles()) {
-            if (Math.abs(px - h[0]) <= 5 && Math.abs(py - h[1]) <= 5) return true;
-        }
-        return false;
-    }
-
     // (droite, haut, gauche, bas)
     private int[][] getCircleGizmoHandles() {
         Circle c = (Circle) gizmoShape;
         int cx = c.getCenter().getX(), cy = c.getCenter().getY(), r = c.getRadius();
         return new int[][]{{cx + r, cy}, {cx, cy - r}, {cx - r, cy}, {cx, cy + r}};
-    }
-
-    //(0=TL,1=TR,2=BL,3=BR) ou -1 si aucun
-    public int getGizmoIndexAt(int px, int py) {
-        if (!(gizmoShape instanceof Rectangle)) return -1;
-        int[][] corners = getGizmoCorners();
-        for (int i = 0; i < corners.length; i++) {
-            if (Math.abs(px - corners[i][0]) <= 5 && Math.abs(py - corners[i][1]) <= 5) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    // Retourne le point du coin à l'index (0=TL,1=TR,2=BL,3=BR)
-    public model.Point getGizmoCorner(int index) {
-        int[][] corners = getGizmoCorners();
-        return new model.Point(corners[index][0], corners[index][1]);
     }
 
     private int[][] getGizmoCorners() {

@@ -7,7 +7,6 @@ public class GameModel extends Observable {
     private List<Shape> redShapes;
     private GroupeForme blueShapes;
     private ShapeType currentShapeType;
-    private Mode currentMode;
     private int canvasWidth = 800;
     private int canvasHeight = 600;
 
@@ -15,7 +14,6 @@ public class GameModel extends Observable {
         this.redShapes = new ArrayList<>();
         this.blueShapes = new GroupeForme();
         this.currentShapeType = ShapeType.CIRCLE;
-        this.currentMode = Mode.DRAW;
     }
 
     public boolean isIntersecting(Shape newShape) {
@@ -126,14 +124,6 @@ public class GameModel extends Observable {
     public void addRedShape(Shape f) {
         redShapes.add(f);
         notifyObservers();
-    }
-
-    public Mode getCurrentMode() {
-        return currentMode;
-    }
-
-    public void setCurrentMode(Mode currentMode) {
-        this.currentMode = currentMode;
     }
 
     public void removeBlueShape(Shape shapeToRemove) {
