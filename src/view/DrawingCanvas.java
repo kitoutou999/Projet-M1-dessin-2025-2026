@@ -16,7 +16,7 @@ public class DrawingCanvas extends JPanel {
     public DrawingCanvas(GameModel model) {
         this.model = model;
         this.setBackground(Color.WHITE);
-        this.setPreferredSize(new Dimension(800, 600));
+        this.setPreferredSize(new Dimension(model.getCanvasWidth(), model.getCanvasHeight()));
         this.setFocusable(true);
     }
 

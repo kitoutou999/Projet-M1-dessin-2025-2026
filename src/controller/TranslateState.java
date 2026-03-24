@@ -9,6 +9,7 @@ public class TranslateState implements ControllerState {
     private MainView view;
     private Shape selectedShape = null;
     private Point clickPoint = null;
+    private boolean lastIsIntersecting = false;
 
     public TranslateState(GameModel model, MainView view) {
         this.model = model;
@@ -27,9 +28,13 @@ public class TranslateState implements ControllerState {
         Point releasePoint = new Point(e.getX(), e.getY());
         int dx = releasePoint.getX() - clickPoint.getX();
         int dy = releasePoint.getY() - clickPoint.getY();
-        model.translateShape(selectedShape, dx, dy);
+        if(lastIsIntersecting){
+            model.translateShape(selectedShape, dx, dy);
+        }
         selectedShape = null;
         view.getDrawingCanvas().setPreviewShape(null, true);
+
+
     }
 
     @Override
@@ -48,7 +53,8 @@ public class TranslateState implements ControllerState {
         } else {
             return;
         }
-        view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview, selectedShape));
+        lastIsIntersecting = !model.isIntersecting(preview,selectedShape);
+        view.getDrawingCanvas().setPreviewShape(preview, lastIsIntersecting);
     }
 
     @Override

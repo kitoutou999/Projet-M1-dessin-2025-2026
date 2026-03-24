@@ -61,4 +61,16 @@ public class Collision{
         }
         return true;
     }
+
+    public static boolean isOutsideCanvas(Shape shape, int canvasWidth, int canvasHeight) {
+        if (shape instanceof Circle) {
+            Circle c = (Circle) shape;
+            return c.getCenter().getX() - c.getRadius() < 0 || c.getCenter().getX() + c.getRadius() > canvasWidth ||
+                   c.getCenter().getY() - c.getRadius() < 0 || c.getCenter().getY() + c.getRadius() > canvasHeight;
+        } else if (shape instanceof Rectangle) {
+            Rectangle r = (Rectangle) shape;
+            return r.getMinX() < 0 || r.getMaxX() > canvasWidth || r.getMinY() < 0 || r.getMaxY() > canvasHeight;
+        }
+        return false;
+    }
 }

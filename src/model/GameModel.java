@@ -8,6 +8,8 @@ public class GameModel extends Observable {
     private List<Shape> blueShapes;
     private ShapeType currentShapeType;
     private Mode currentMode;
+    private int canvasWidth = 800;
+    private int canvasHeight = 600;
 
     public GameModel() {
         this.redShapes = new ArrayList<>();
@@ -32,6 +34,11 @@ public class GameModel extends Observable {
                 return true;
             }
         }
+
+        if(Collision.isOutsideCanvas(newShape, 800, 600)){
+            return true;
+        }
+
         return false;
     }
 
@@ -102,6 +109,10 @@ public class GameModel extends Observable {
     public int getScore(){
         return blueShapes.size();
     }
+
+    public int getCanvasWidth() {return canvasWidth;}
+
+    public int getCanvasHeight() {return canvasHeight;}
 
     public void addBlueShape(Shape f, Observer observer) {
         blueShapes.add(f);

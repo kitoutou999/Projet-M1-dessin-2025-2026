@@ -20,11 +20,17 @@ public class DrawState implements ControllerState {
         if (firstClickPoint == null) {
             firstClickPoint = clickPoint;
         } else {
+            Shape shape = null;
             if (model.getCurrentShapeType() == ShapeType.CIRCLE) {
                 int rayon = (int) Math.sqrt(Math.pow(clickPoint.getX() - firstClickPoint.getX(), 2) + Math.pow(clickPoint.getY() - firstClickPoint.getY(), 2));
-                model.addBlueShape(new Circle(firstClickPoint, rayon), view);
+                shape = new Circle(firstClickPoint, rayon);
+
             } else if (model.getCurrentShapeType() == ShapeType.RECTANGLE) {
-                model.addBlueShape(new Rectangle(firstClickPoint, clickPoint), view);
+                shape = new Rectangle(firstClickPoint, clickPoint);
+
+            }
+            if(!model.isIntersecting(shape)){
+                model.addBlueShape(shape, view);
             }
             firstClickPoint = null;
             view.getDrawingCanvas().setPreviewShape(null, true);

@@ -10,6 +10,7 @@ public class ScaleState implements ControllerState {
     private Shape selectedShape = null;
     private Point draggedGizmoCorner = null;
     private Point fixedGizmoCorner = null;
+    private Boolean lastIsIntersecting = false;
 
     public ScaleState(GameModel model, MainView view) {
         this.model = model;
@@ -50,11 +51,15 @@ public class ScaleState implements ControllerState {
     public void mouseReleased(MouseEvent e) {
         if (draggedGizmoCorner == null) return;
         if (selectedShape instanceof Rectangle) {
-            model.resizeRectangle((Rectangle) selectedShape, fixedGizmoCorner, new Point(e.getX(), e.getY()));
+            if(lastIsIntersecting) {
+                model.resizeRectangle((Rectangle) selectedShape, fixedGizmoCorner, new Point(e.getX(), e.getY()));
+            }
             fixedGizmoCorner = null;
         } else if (selectedShape instanceof Circle) {
             Circle c = (Circle) selectedShape;
-            model.resizeCircle(c, c.getCenter(), new Point(e.getX(), e.getY()));
+            if(lastIsIntersecting){
+                model.resizeCircle(c, c.getCenter(), new Point(e.getX(), e.getY()));
+            }
         }
         view.getDrawingCanvas().createGizmo(selectedShape);
         view.getDrawingCanvas().setPreviewShape(null, true);
@@ -67,13 +72,15 @@ public class ScaleState implements ControllerState {
         Point currentPoint = new Point(e.getX(), e.getY());
         if (selectedShape instanceof Rectangle) {
             Rectangle preview = new Rectangle(fixedGizmoCorner, currentPoint);
-            view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview, selectedShape));
+            lastIsIntersecting = !model.isIntersecting(preview, selectedShape);
+            view.getDrawingCanvas().setPreviewShape(preview, lastIsIntersecting);
             view.getDrawingCanvas().createGizmo(preview);
         } else if (selectedShape instanceof Circle) {
             Circle c = (Circle) selectedShape;
             int newRadius = (int) Math.sqrt(Math.pow(currentPoint.getX() - c.getCenter().getX(), 2) + Math.pow(currentPoint.getY() - c.getCenter().getY(), 2));
             Circle preview = new Circle(c.getCenter(), newRadius);
-            view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview, selectedShape));
+            lastIsIntersecting = !model.isIntersecting(preview, selectedShape);
+            view.getDrawingCanvas().setPreviewShape(preview, lastIsIntersecting);
             view.getDrawingCanvas().createGizmo(preview);
         }
     }
