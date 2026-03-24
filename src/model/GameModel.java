@@ -1,5 +1,8 @@
 package model;
 
+import model.shapes.Shape;
+import model.shapes.ShapeType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,46 +46,17 @@ public class GameModel extends Observable {
     public Shape getShapeAt(Point p) {
         List<Shape> shapes = blueShapes.getShapes();
         for (int i = shapes.size() - 1; i >= 0; i--) {
-            Shape shape = shapes.get(i);
-            if (shape instanceof Circle) {
-                Circle c = (Circle) shape;
-                double dx = p.getX() - c.getCenter().getX();
-                double dy = p.getY() - c.getCenter().getY();
-                if (Math.sqrt(dx * dx + dy * dy) <= c.getRadius()) {
-                    return shape;
-                }
-            } else if (shape instanceof Rectangle) {
-                Rectangle r = (Rectangle) shape;
-                int minX = Math.min(r.getStart().getX(), r.getEnd().getX());
-                int maxX = Math.max(r.getStart().getX(), r.getEnd().getX());
-                int minY = Math.min(r.getStart().getY(), r.getEnd().getY());
-                int maxY = Math.max(r.getStart().getY(), r.getEnd().getY());
-                if (p.getX() >= minX && p.getX() <= maxX && p.getY() >= minY && p.getY() <= maxY) {
-                    return shape;
-                }
-            }
+            if (shapes.get(i).contains(p)) return shapes.get(i);
         }
         return null;
     }
 
     public void translateShape(Shape shapeToMove, int dx, int dy) {
-        if (shapeToMove instanceof Circle) {
-            Circle c = (Circle) shapeToMove;
-            c.setCenter(new Point(c.getCenter().getX() + dx, c.getCenter().getY() + dy));
-        } else if (shapeToMove instanceof Rectangle) {
-            Rectangle r = (Rectangle) shapeToMove;
-            r.setStart(new Point(r.getStart().getX() + dx, r.getStart().getY() + dy));
-            r.setEnd(new Point(r.getEnd().getX() + dx, r.getEnd().getY() + dy));
-        }
+        shapeToMove.translate(dx, dy);
     }
 
-    public void resizeRectangle(Rectangle r, Point corner1, Point corner2) {
-        r.setStart(new Point(Math.min(corner1.getX(), corner2.getX()), Math.min(corner1.getY(), corner2.getY())));
-        r.setEnd(new Point(Math.max(corner1.getX(), corner2.getX()), Math.max(corner1.getY(), corner2.getY())));
-    }
-
-    public void resizeCircle(Circle c, int newRadius) {
-        c.setRadius(newRadius);
+    public void resize(Shape shape, Point anchor, Point drag) {
+        shape.resize(anchor, drag);
     }
 
     public float getScore() {

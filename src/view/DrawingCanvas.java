@@ -1,12 +1,11 @@
 package view;
 
 import model.GameModel;
-import model.Shape;
-import model.Circle;
-import model.Rectangle;
+import model.shapes.Shape;
+import model.shapes.Circle;
+import model.shapes.Rectangle;
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class DrawingCanvas extends JPanel {
     private GameModel model;

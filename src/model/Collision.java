@@ -1,10 +1,11 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import model.shapes.Circle;
+import model.shapes.Rectangle;
+import model.shapes.Shape;
 
 public class Collision{
-    public static boolean collisionBetween(Shape shape1,Shape shape2){
+    public static boolean collisionBetween(Shape shape1, Shape shape2){
         int comp = 0;
         Circle c1 = null;
         Circle c2 = null;

@@ -1,7 +1,7 @@
-package controller;
+package controller.commands;
 
 import model.GameModel;
-import model.Shape;
+import model.shapes.Shape;
 
 public class TranslateCommand implements OperationCommand {
     private Shape shape;

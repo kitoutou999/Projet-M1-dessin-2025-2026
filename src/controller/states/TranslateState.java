@@ -1,6 +1,10 @@
-package controller;
+package controller.states;
 
-import model.*;
+import controller.CommandHandler;
+import controller.commands.TranslateCommand;
+import model.GameModel;
+import model.Point;
+import model.shapes.Shape;
 import view.MainView;
 import java.awt.event.MouseEvent;
 
@@ -46,17 +50,8 @@ public class TranslateState implements ControllerState {
         Point currentPoint = new Point(e.getX(), e.getY());
         int dx = currentPoint.getX() - clickPoint.getX();
         int dy = currentPoint.getY() - clickPoint.getY();
-        Shape preview;
-        if (selectedShape instanceof Circle) {
-            Circle c = (Circle) selectedShape;
-            preview = new Circle(new Point(c.getCenter().getX() + dx, c.getCenter().getY() + dy), c.getRadius());
-        } else if (selectedShape instanceof Rectangle) {
-            Rectangle r = (Rectangle) selectedShape;
-            preview = new Rectangle(new Point(r.getStart().getX() + dx, r.getStart().getY() + dy), new Point(r.getEnd().getX() + dx, r.getEnd().getY() + dy));
-        } else {
-            return;
-        }
-        lastIsIntersecting = !model.isIntersecting(preview,selectedShape);
+        Shape preview = selectedShape.translated(dx, dy);
+        lastIsIntersecting = !model.isIntersecting(preview, selectedShape);
         view.getDrawingCanvas().setPreviewShape(preview, lastIsIntersecting);
     }
 

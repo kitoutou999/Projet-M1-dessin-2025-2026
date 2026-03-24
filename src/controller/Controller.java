@@ -1,6 +1,8 @@
 package controller;
 
+import controller.states.*;
 import model.*;
+import model.shapes.ShapeType;
 import view.MainView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,7 +17,7 @@ public class Controller {
     public Controller(GameModel model, MainView view, CommandHandler handler) {
         this.model = model;
         this.view = view;
-        this.currentState = new DrawState(model, view, handler);
+        this.currentState = new AddShapeState(model, view, handler);
         this.handler = handler;
 
         this.view.getDrawingCanvas().addMouseListener(new MouseAdapter() {
@@ -36,7 +38,7 @@ public class Controller {
         this.view.getToolbar().getBtnRectangle().addActionListener(e -> model.setCurrentShapeType(ShapeType.RECTANGLE));
 
         this.view.getToolbar().getBtnDraw().addActionListener(e -> {
-            if (((JToggleButton) e.getSource()).isSelected()) setState(new DrawState(model, view,handler));
+            if (((JToggleButton) e.getSource()).isSelected()) setState(new AddShapeState(model, view,handler));
         });
         this.view.getToolbar().getBtnMove().addActionListener(e -> {
             if (((JToggleButton) e.getSource()).isSelected()) setState(new TranslateState(model, view,handler));

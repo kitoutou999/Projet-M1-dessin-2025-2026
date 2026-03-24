@@ -1,6 +1,9 @@
-package controller;
+package controller.states;
 
+import controller.CommandHandler;
+import controller.commands.RemoveCommand;
 import model.*;
+import model.shapes.Shape;
 import view.MainView;
 import java.awt.event.MouseEvent;
 

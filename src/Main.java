@@ -1,6 +1,8 @@
 import controller.CommandHandler;
 import controller.Controller;
 import model.*;
+import model.shapes.Circle;
+import model.shapes.Rectangle;
 import view.MainView;
 
 import javax.swing.SwingUtilities;
