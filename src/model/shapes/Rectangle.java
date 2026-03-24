@@ -1,5 +1,6 @@
 package model.shapes;
 
+import model.Collision;
 import model.Point;
 
 public class Rectangle extends Shape {
@@ -66,6 +67,27 @@ public class Rectangle extends Shape {
 	@Override
 	public Shape resized(Point anchor, Point drag) {
 		return new Rectangle(anchor, drag);
+	}
+
+	@Override
+	public boolean isInsideCanvas(int width, int height) {
+		return getMinX() >= 0 && getMaxX() <= width
+			&& getMinY() >= 0 && getMaxY() <= height;
+	}
+
+	@Override
+	public boolean collidesWith(Shape other) {
+		return other.collidesWithRectangle(this);
+	}
+
+	@Override
+	public boolean collidesWithCircle(Circle c) {
+		return Collision.collisionRectangleCircle(this, c);
+	}
+
+	@Override
+	public boolean collidesWithRectangle(Rectangle r) {
+		return Collision.collisionRectangleRectangle(this, r);
 	}
 
 }

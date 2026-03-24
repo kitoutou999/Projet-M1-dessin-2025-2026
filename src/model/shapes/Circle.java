@@ -1,5 +1,6 @@
 package model.shapes;
 
+import model.Collision;
 import model.Point;
 
 public class Circle extends Shape {
@@ -61,6 +62,27 @@ public class Circle extends Shape {
 	public Shape resized(Point anchor, Point drag) {
 		int newRadius = (int) Math.sqrt(Math.pow(drag.getX() - center.getX(), 2) + Math.pow(drag.getY() - center.getY(), 2));
 		return new Circle(center, newRadius);
+	}
+
+	@Override
+	public boolean isInsideCanvas(int width, int height) {
+		return center.getX() - radius >= 0 && center.getX() + radius <= width
+			&& center.getY() - radius >= 0 && center.getY() + radius <= height;
+	}
+
+	@Override
+	public boolean collidesWith(Shape other) {
+		return other.collidesWithCircle(this);
+	}
+
+	@Override
+	public boolean collidesWithCircle(Circle c) {
+		return Collision.collisionCircleCircle(this, c);
+	}
+
+	@Override
+	public boolean collidesWithRectangle(Rectangle r) {
+		return Collision.collisionRectangleCircle(r, this);
 	}
 
 }

@@ -25,22 +25,13 @@ public class GameModel extends Observable {
 
     public boolean isIntersecting(Shape newShape, Shape exclude) {
         for (Shape shape : redShapes) {
-            if (Collision.collisionBetween(shape, newShape)) {
-                return true;
-            }
+            if (shape.collidesWith(newShape)) return true;
         }
         for (Shape shape : blueShapes.getShapes()) {
             if (shape.equals(exclude)) continue;
-            if (Collision.collisionBetween(shape, newShape)) {
-                return true;
-            }
+            if (shape.collidesWith(newShape)) return true;
         }
-
-        if (Collision.isOutsideCanvas(newShape, canvasWidth, canvasHeight)) {
-            return true;
-        }
-
-        return false;
+        return !newShape.isInsideCanvas(canvasWidth, canvasHeight);
     }
 
     public Shape getShapeAt(Point p) {
