@@ -9,9 +9,12 @@ public class DrawState implements ControllerState {
     private MainView view;
     private Point firstClickPoint = null;
 
-    public DrawState(GameModel model, MainView view) {
+    private CommandHandler handler;
+
+    public DrawState(GameModel model, MainView view, CommandHandler handler) {
         this.model = model;
         this.view = view;
+        this.handler = handler;
     }
 
     @Override
@@ -29,8 +32,8 @@ public class DrawState implements ControllerState {
                 shape = new Rectangle(firstClickPoint, clickPoint);
 
             }
-            if(!model.isIntersecting(shape)){
-                model.addBlueShape(shape, view);
+            if (!model.isIntersecting(shape)) {
+                handler.executeCommand(new AddShapeCommand(shape, model));
             }
             firstClickPoint = null;
             view.getDrawingCanvas().setPreviewShape(null, true);
@@ -56,4 +59,5 @@ public class DrawState implements ControllerState {
             view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview));
         }
     }
+
 }

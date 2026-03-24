@@ -10,11 +10,13 @@ public class Controller {
     private GameModel model;
     private MainView view;
     private ControllerState currentState;
+    private CommandHandler handler;
 
-    public Controller(GameModel model, MainView view) {
+    public Controller(GameModel model, MainView view, CommandHandler handler) {
         this.model = model;
         this.view = view;
-        this.currentState = new DrawState(model, view);
+        this.currentState = new DrawState(model, view, handler);
+        this.handler = handler;
 
         this.view.getDrawingCanvas().addMouseListener(new MouseAdapter() {
             @Override
@@ -34,20 +36,20 @@ public class Controller {
         this.view.getToolbar().getBtnRectangle().addActionListener(e -> model.setCurrentShapeType(ShapeType.RECTANGLE));
 
         this.view.getToolbar().getBtnDraw().addActionListener(e -> {
-            if (((JToggleButton) e.getSource()).isSelected()) setState(new DrawState(model, view));
+            if (((JToggleButton) e.getSource()).isSelected()) setState(new DrawState(model, view,handler));
         });
         this.view.getToolbar().getBtnMove().addActionListener(e -> {
-            if (((JToggleButton) e.getSource()).isSelected()) setState(new TranslateState(model, view));
+            if (((JToggleButton) e.getSource()).isSelected()) setState(new TranslateState(model, view,handler));
         });
         this.view.getToolbar().getBtnScale().addActionListener(e -> {
-            if (((JToggleButton) e.getSource()).isSelected()) setState(new ScaleState(model, view));
+            if (((JToggleButton) e.getSource()).isSelected()) setState(new ScaleState(model, view,handler));
         });
         this.view.getToolbar().getBtnRemove().addActionListener(e -> {
-            if (((JToggleButton) e.getSource()).isSelected()) setState(new RemoveState(model, view));
+            if (((JToggleButton) e.getSource()).isSelected()) setState(new RemoveState(model, view,handler));
         });
 
-        this.view.getToolbar().getBtnUndo().addActionListener(e -> System.out.println("Undo"));
-        this.view.getToolbar().getBtnRedo().addActionListener(e -> System.out.println("Redo"));
+        this.view.getToolbar().getBtnUndo().addActionListener(e -> handler.undo());
+        this.view.getToolbar().getBtnRedo().addActionListener(e -> handler.redo());
     }
 
     private void setState(ControllerState newState) {

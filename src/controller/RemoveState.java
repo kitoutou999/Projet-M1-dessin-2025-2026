@@ -7,10 +7,12 @@ import java.awt.event.MouseEvent;
 public class RemoveState implements ControllerState {
     private GameModel model;
     private MainView view;
+    private CommandHandler handler;
 
-    public RemoveState(GameModel model, MainView view) {
+    public RemoveState(GameModel model, MainView view, CommandHandler handler) {
         this.model = model;
         this.view = view;
+        this.handler = handler;
     }
 
     @Override
@@ -18,7 +20,8 @@ public class RemoveState implements ControllerState {
         Point clickPoint = new Point(e.getX(), e.getY());
         Shape shapeToRemove = model.getShapeAt(clickPoint);
         if (shapeToRemove != null) {
-            model.removeBlueShape(shapeToRemove);
+            handler.executeCommand(new RemoveCommand(shapeToRemove,model));
+
         }
     }
 

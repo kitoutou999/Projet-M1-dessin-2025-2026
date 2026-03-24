@@ -12,9 +12,12 @@ public class ScaleState implements ControllerState {
     private Point fixedGizmoCorner = null;
     private Boolean lastIsIntersecting = false;
 
-    public ScaleState(GameModel model, MainView view) {
+    private CommandHandler handler;
+
+    public ScaleState(GameModel model, MainView view, CommandHandler handler) {
         this.model = model;
         this.view = view;
+        this.handler = handler;
     }
 
     @Override
@@ -51,14 +54,22 @@ public class ScaleState implements ControllerState {
     public void mouseReleased(MouseEvent e) {
         if (draggedGizmoCorner == null) return;
         if (selectedShape instanceof Rectangle) {
-            if(lastIsIntersecting) {
-                model.resizeRectangle((Rectangle) selectedShape, fixedGizmoCorner, new Point(e.getX(), e.getY()));
+            if (lastIsIntersecting) {
+                Rectangle r = (Rectangle) selectedShape;
+                Point oldStart = r.getStart();
+                Point oldEnd = r.getEnd();
+                Point releasePoint = new Point(e.getX(), e.getY());
+                Point newStart = new Point(Math.min(fixedGizmoCorner.getX(), releasePoint.getX()), Math.min(fixedGizmoCorner.getY(), releasePoint.getY()));
+                Point newEnd = new Point(Math.max(fixedGizmoCorner.getX(), releasePoint.getX()), Math.max(fixedGizmoCorner.getY(), releasePoint.getY()));
+                handler.executeCommand(new ResizeRectangleCommand(r, oldStart, oldEnd, newStart, newEnd, model));
             }
             fixedGizmoCorner = null;
         } else if (selectedShape instanceof Circle) {
             Circle c = (Circle) selectedShape;
-            if(lastIsIntersecting){
-                model.resizeCircle(c, c.getCenter(), new Point(e.getX(), e.getY()));
+            if (lastIsIntersecting) {
+                int oldRadius = c.getRadius();
+                int newRadius = (int) Math.sqrt(Math.pow(e.getX() - c.getCenter().getX(), 2) + Math.pow(e.getY() - c.getCenter().getY(), 2));
+                handler.executeCommand(new ResizeCircleCommand(c, oldRadius, newRadius, model));
             }
         }
         view.getDrawingCanvas().createGizmo(selectedShape);

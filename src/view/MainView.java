@@ -13,6 +13,7 @@ public class MainView extends JFrame implements Observer {
     public MainView(GameModel model) {
         this.model = model;
         this.model.addObserver(this);
+        this.model.getBlueGroup().addObserver(this);
 
         this.setTitle("Jeu d'Occupation Maximale d'Espace");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

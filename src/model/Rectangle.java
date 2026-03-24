@@ -28,6 +28,10 @@ public class Rectangle extends Shape{
 		notifyObservers();
 	}
 
+	public float getArea(){
+		return Math.abs((end.getX() - start.getX()) * (end.getY() - start.getY()));
+	}
+
 	public int getMinX() { return Math.min(start.getX(), end.getX()); }
 	public int getMaxX() { return Math.max(start.getX(), end.getX()); }
 	public int getMinY() { return Math.min(start.getY(), end.getY()); }

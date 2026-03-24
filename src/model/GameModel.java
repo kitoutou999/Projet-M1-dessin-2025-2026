@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GameModel extends Observable {
     private List<Shape> redShapes;
-    private List<Shape> blueShapes;
+    private GroupeForme blueShapes;
     private ShapeType currentShapeType;
     private Mode currentMode;
     private int canvasWidth = 800;
@@ -13,7 +13,7 @@ public class GameModel extends Observable {
 
     public GameModel() {
         this.redShapes = new ArrayList<>();
-        this.blueShapes = new ArrayList<>();
+        this.blueShapes = new GroupeForme();
         this.currentShapeType = ShapeType.CIRCLE;
         this.currentMode = Mode.DRAW;
     }
@@ -28,14 +28,14 @@ public class GameModel extends Observable {
                 return true;
             }
         }
-        for (Shape shape : blueShapes) {
+        for (Shape shape : blueShapes.getShapes()) {
             if (shape.equals(exclude)) continue;
             if (Collision.collisionBetween(shape, newShape)) {
                 return true;
             }
         }
 
-        if(Collision.isOutsideCanvas(newShape, 800, 600)){
+        if (Collision.isOutsideCanvas(newShape, canvasWidth, canvasHeight)) {
             return true;
         }
 
@@ -43,7 +43,9 @@ public class GameModel extends Observable {
     }
 
     public Shape getShapeAt(Point p) {
-        for (Shape shape : blueShapes.reversed()) {
+        List<Shape> shapes = blueShapes.getShapes();
+        for (int i = shapes.size() - 1; i >= 0; i--) {
+            Shape shape = shapes.get(i);
             if (shape instanceof Circle) {
                 Circle c = (Circle) shape;
                 double dx = p.getX() - c.getCenter().getX();
@@ -74,21 +76,24 @@ public class GameModel extends Observable {
             r.setStart(new Point(r.getStart().getX() + dx, r.getStart().getY() + dy));
             r.setEnd(new Point(r.getEnd().getX() + dx, r.getEnd().getY() + dy));
         }
-         notifyObservers();
     }
 
     public void resizeRectangle(Rectangle r, Point corner1, Point corner2) {
         r.setStart(new Point(Math.min(corner1.getX(), corner2.getX()), Math.min(corner1.getY(), corner2.getY())));
         r.setEnd(new Point(Math.max(corner1.getX(), corner2.getX()), Math.max(corner1.getY(), corner2.getY())));
-        notifyObservers();
     }
-    public void resizeCircle(Circle c, Point center, Point edge) {
-        int newRadius = (int) Math.sqrt(Math.pow(edge.getX() - center.getX(), 2) + Math.pow(edge.getY() - center.getY(), 2));
+
+    public void resizeCircle(Circle c, int newRadius) {
         c.setRadius(newRadius);
-        notifyObservers();
     }
 
-
+    public float getScore() {
+        float totalArea = 0;
+        for (Shape shape : blueShapes.getShapes()) {
+            totalArea += shape.getArea();
+        }
+        return totalArea / 1000;
+    }
 
     public ShapeType getCurrentShapeType() {
         return currentShapeType;
@@ -103,21 +108,19 @@ public class GameModel extends Observable {
     }
 
     public List<Shape> getBlueShapes() {
+        return blueShapes.getShapes();
+    }
+
+    public GroupeForme getBlueGroup() {
         return blueShapes;
     }
 
-    public int getScore(){
-        return blueShapes.size();
-    }
+    public int getCanvasWidth() { return canvasWidth; }
 
-    public int getCanvasWidth() {return canvasWidth;}
+    public int getCanvasHeight() { return canvasHeight; }
 
-    public int getCanvasHeight() {return canvasHeight;}
-
-    public void addBlueShape(Shape f, Observer observer) {
+    public void addBlueShape(Shape f) {
         blueShapes.add(f);
-        f.addObserver(observer);
-        notifyObservers();
     }
 
     public void addRedShape(Shape f) {
@@ -135,6 +138,5 @@ public class GameModel extends Observable {
 
     public void removeBlueShape(Shape shapeToRemove) {
         blueShapes.remove(shapeToRemove);
-        notifyObservers();
     }
 }

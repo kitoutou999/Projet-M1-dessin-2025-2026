@@ -28,4 +28,8 @@ public class Circle extends Shape{
 		notifyObservers();
 	}
 
+	public float getArea(){
+		return (float) (Math.PI * radius * radius);
+	}
+
 }
