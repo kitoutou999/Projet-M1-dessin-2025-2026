@@ -14,8 +14,8 @@ public class Controller {
     private ControllerState currentState;
     private CommandHandler handler;
 
-    public Controller(GameModel model, MainView view, CommandHandler handler) {
-        this.model = model;
+    public Controller(MainView view, CommandHandler handler) {
+        this.model = view.getModel();
         this.view = view;
         this.currentState = new AddShapeState(model, view, handler);
         this.handler = handler;

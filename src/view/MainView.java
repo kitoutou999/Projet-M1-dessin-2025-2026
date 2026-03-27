@@ -42,4 +42,8 @@ public class MainView extends JFrame implements Observer {
         this.drawingCanvas.repaint();
         this.toolbar.updateScore(model.getScore()); 
     }
+
+    public GameModel getModel() {
+        return this.model;
+    }
 }

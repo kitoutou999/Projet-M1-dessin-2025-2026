@@ -14,7 +14,7 @@ public class Main{
 			GameModel model = new GameModel();
 			MainView view = new MainView(model);
 			CommandHandler handler = new CommandHandler();
-			Controller controller = new Controller(model, view, handler);
+			Controller controller = new Controller(view, handler);
 
 
 			model.addRedShape(new Circle(new Point(100, 100), 50));
