@@ -13,12 +13,15 @@ public class Controller {
     private MainView view;
     private ControllerState currentState;
     private CommandHandler handler;
+    private HardModeTimer hardModeTimer;
 
-    public Controller(MainView view, CommandHandler handler) {
+    public Controller(MainView view, CommandHandler handler, HardModeTimer hardModeTimer) {
         this.model = view.getModel();
         this.view = view;
-        this.currentState = new AddShapeState(model, view, handler);
         this.handler = handler;
+        this.hardModeTimer = hardModeTimer;
+        this.currentState = new AddShapeState(model, view, handler, hardModeTimer);
+        if (hardModeTimer != null) hardModeTimer.start();
 
         this.view.getDrawingCanvas().addMouseListener(new MouseAdapter() {
             @Override
@@ -38,7 +41,7 @@ public class Controller {
         this.view.getToolbar().getBtnRectangle().addActionListener(e -> model.setCurrentShapeType(ShapeType.RECTANGLE));
 
         this.view.getToolbar().getBtnDraw().addActionListener(e -> {
-            if (((JToggleButton) e.getSource()).isSelected()) setState(new AddShapeState(model, view,handler));
+            if (((JToggleButton) e.getSource()).isSelected()) setState(new AddShapeState(model, view, handler, hardModeTimer));
         });
         this.view.getToolbar().getBtnMove().addActionListener(e -> {
             if (((JToggleButton) e.getSource()).isSelected()) setState(new TranslateState(model, view,handler));

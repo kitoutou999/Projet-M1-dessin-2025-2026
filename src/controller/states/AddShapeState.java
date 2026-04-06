@@ -1,6 +1,7 @@
 package controller.states;
 
 import controller.CommandHandler;
+import controller.HardModeTimer;
 import controller.commands.AddShapeCommand;
 import model.GameModel;
 import model.Point;
@@ -11,19 +12,25 @@ import java.awt.event.MouseEvent;
 public class AddShapeState implements ControllerState {
     private GameModel model;
     private MainView view;
+    private CommandHandler handler;
+    private HardModeTimer hardModeTimer;
     private Point firstClickPoint = null;
 
-    private CommandHandler handler;
-
-    public AddShapeState(GameModel model, MainView view, CommandHandler handler) {
+    public AddShapeState(GameModel model, MainView view, CommandHandler handler, HardModeTimer hardModeTimer) {
         this.model = model;
         this.view = view;
         this.handler = handler;
+        this.hardModeTimer = hardModeTimer;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         if (model.isGameOver()) return;
+
+        if (model.isRedShapesVisible() && hardModeTimer != null) {
+            model.hideRedShapes();
+            hardModeTimer.stop();
+        }
 
         Point clickPoint = new Point(e.getX(), e.getY());
         if (firstClickPoint == null) {
@@ -35,10 +42,12 @@ public class AddShapeState implements ControllerState {
                 if (model.isGameOver()) {
                     model.recordScore();
                     if (model.isLastRound()) {
+                        if (hardModeTimer != null) hardModeTimer.stop();
                         view.showFinalScoreDialog();
                     } else {
                         view.showNextRoundDialog();
                         model.loadNextLevel();
+                        if (hardModeTimer != null) hardModeTimer.start();
                     }
                 }
             }

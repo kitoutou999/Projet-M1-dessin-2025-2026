@@ -20,6 +20,7 @@ public class GameModel extends Observable {
 
     private int currentRound = 1;
     private final List<Float> roundScores = new ArrayList<>();
+    private boolean redShapesVisible = true;
 
     public GameModel(LevelStrategy levelStrategy) {
         this.levelStrategy = levelStrategy;
@@ -34,6 +35,7 @@ public class GameModel extends Observable {
 
     public void loadNextLevel() {
         currentRound++;
+        redShapesVisible = true;
         blueShapes.clear();
         this.redShapes = new ArrayList<>(levelStrategy.generateLevel());
         notifyObservers();
@@ -59,7 +61,7 @@ public class GameModel extends Observable {
     }
 
     public boolean isIntersecting(Shape newShape, Shape exclude) {
-        for (Shape shape : redShapes) {
+        for (Shape shape : getAllRedShapes()) {
             if (shape.collidesWith(newShape)) return true;
         }
         for (Shape shape : blueShapes.getShapes()) {
@@ -106,7 +108,15 @@ public class GameModel extends Observable {
     }
 
     public List<Shape> getRedShapes() {
+        return redShapesVisible ? redShapes : new ArrayList<>();
+    }
+
+    public List<Shape> getAllRedShapes() {
         return redShapes;
+    }
+
+    public boolean isRedShapesVisible() {
+        return redShapesVisible;
     }
 
     public List<Shape> getBlueShapes() {
@@ -133,5 +143,10 @@ public class GameModel extends Observable {
 
     public void removeBlueShape(Shape shapeToRemove) {
         blueShapes.remove(shapeToRemove);
+    }
+
+    public void hideRedShapes() {
+        redShapesVisible = false;
+        notifyObservers();
     }
 }

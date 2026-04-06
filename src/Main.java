@@ -1,5 +1,7 @@
 import controller.CommandHandler;
 import controller.Controller;
+import controller.HardModeTimer;
+import model.Difficulty;
 import model.GameModel;
 import model.GameSettings;
 import model.LevelType;
@@ -25,7 +27,12 @@ public class Main {
             GameModel model = new GameModel(strategy);
             MainView view = new MainView(model);
             CommandHandler handler = new CommandHandler();
-            Controller controller = new Controller(view, handler);
+
+            HardModeTimer hardModeTimer = settings.getDifficulty() == Difficulty.HARD
+                    ? new HardModeTimer(model)
+                    : null;
+
+            new Controller(view, handler, hardModeTimer);
 
             view.setVisible(true);
         });
