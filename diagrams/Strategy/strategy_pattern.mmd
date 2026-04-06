@@ -1,0 +1,27 @@
+classDiagram
+    class LevelStrategy {
+        <<interface>>
+        +generateShapes() List~Shape~
+    }
+
+    class PresetLevelStrategy {
+        -String levelFile
+        +generateShapes() List~Shape~
+    }
+
+    class RandomLevelStrategy {
+        -int count
+        -int width
+        -int height
+        +generateShapes() List~Shape~
+    }
+
+    class GameModel {
+        -LevelStrategy strategy
+        +setStrategy(LevelStrategy strategy)
+        +loadLevel()
+    }
+
+    LevelStrategy <|.. PresetLevelStrategy
+    LevelStrategy <|.. RandomLevelStrategy
+    GameModel o-- LevelStrategy : uses

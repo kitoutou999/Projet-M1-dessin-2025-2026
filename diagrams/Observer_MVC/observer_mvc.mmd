@@ -1,0 +1,45 @@
+classDiagram
+    class Observer {
+        <<interface>>
+        +update()
+    }
+
+    class Observable {
+        <<abstract>>
+        -List~Observer~ observers
+        +addObserver(Observer obs)
+        +removeObserver(Observer obs)
+        +notifyObservers()
+    }
+
+    class GameModel {
+        -List~Shape~ shapes
+        +addShape(Shape s)
+        +removeShape(Shape s)
+    }
+
+    class DrawingCanvas {
+        -GameModel model
+        +update()
+        +paintComponent(Graphics g)
+    }
+
+    class MainView {
+        -GameModel model
+        -DrawingCanvas canvas
+        +update()
+    }
+
+    class Controller {
+        -GameModel model
+        -MainView view
+    }
+
+    Observable <|-- GameModel
+    Observer <|.. DrawingCanvas
+    Observer <|.. MainView
+    Observable o-- Observer : notifies
+    GameModel <-- DrawingCanvas : observes
+    GameModel <-- MainView : observes
+    Controller --> GameModel : modifies
+    Controller --> MainView : updates

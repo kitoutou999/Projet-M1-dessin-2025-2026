@@ -1,0 +1,51 @@
+classDiagram
+    class OperationCommand {
+        <<interface>>
+        +operate()
+        +compensate()
+    }
+
+    class AddShapeCommand {
+        -GameModel model
+        -Shape shape
+        +operate()
+        +compensate()
+    }
+
+    class RemoveCommand {
+        -GameModel model
+        -Shape shape
+        +operate()
+        +compensate()
+    }
+
+    class ScaleCommand {
+        -Shape shape
+        -Point anchor
+        -Point oldDrag
+        -Point newDrag
+        +operate()
+        +compensate()
+    }
+
+    class TranslateCommand {
+        -Shape shape
+        -int dx
+        -int dy
+        +operate()
+        +compensate()
+    }
+
+    class CommandHandler {
+        -List~OperationCommand~ doneCommands
+        -List~OperationCommand~ undoneCommands
+        +executeCommand(OperationCommand command)
+        +undo()
+        +redo()
+    }
+
+    OperationCommand <|.. AddShapeCommand
+    OperationCommand <|.. RemoveCommand
+    OperationCommand <|.. ScaleCommand
+    OperationCommand <|.. TranslateCommand
+    CommandHandler o-- OperationCommand : manages

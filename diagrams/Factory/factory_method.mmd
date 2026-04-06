@@ -1,0 +1,23 @@
+classDiagram
+    class ShapeType {
+        <<enumeration>>
+        CIRCLE
+        RECTANGLE
+        +createFrom(Point p1, Point p2) Shape
+    }
+
+    class Shape {
+        <<abstract>>
+    }
+
+    class Circle {
+    }
+
+    class Rectangle {
+    }
+
+    Shape <|-- Circle
+    Shape <|-- Rectangle
+    ShapeType ..> Circle : creates
+    ShapeType ..> Rectangle : creates
+    ShapeType ..> Shape : returns

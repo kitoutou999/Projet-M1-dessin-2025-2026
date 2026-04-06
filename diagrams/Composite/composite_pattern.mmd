@@ -1,0 +1,36 @@
+classDiagram
+    class Shape {
+        <<abstract>>
+        +getArea() float
+        +contains(Point p) boolean
+        +translate(int dx, int dy)
+    }
+
+    class Circle {
+        -Point center
+        -int radius
+        +getArea() float
+    }
+
+    class Rectangle {
+        -Point topLeft
+        -int width
+        -int height
+        +getArea() float
+    }
+
+    class GroupeForme {
+        -List~Shape~ shapes
+        +add(Shape s)
+        +remove(Shape s)
+        +getShapes() List~Shape~
+    }
+
+    Shape <|-- Circle
+    Shape <|-- Rectangle
+    GroupeForme o-- Shape : contains
+    Observable <|-- Shape
+    Observer <|.. GroupeForme
+    Observable <|-- GroupeForme
+    GroupeForme --|> Observable
+    Shape --|> Observable

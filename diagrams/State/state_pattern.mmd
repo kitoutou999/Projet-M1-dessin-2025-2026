@@ -1,0 +1,63 @@
+classDiagram
+    class ControllerState {
+        <<interface>>
+        +mousePressed(MouseEvent e)
+        +mouseReleased(MouseEvent e)
+        +mouseDragged(MouseEvent e)
+        +mouseMoved(MouseEvent e)
+    }
+
+    class AddShapeState {
+        -GameModel model
+        -MainView view
+        -CommandHandler handler
+        -HardModeTimer timer
+        +mousePressed(MouseEvent e)
+        +mouseReleased(MouseEvent e)
+        +mouseDragged(MouseEvent e)
+        +mouseMoved(MouseEvent e)
+    }
+
+    class RemoveState {
+        -GameModel model
+        -MainView view
+        -CommandHandler handler
+        +mousePressed(MouseEvent e)
+        +mouseReleased(MouseEvent e)
+        +mouseDragged(MouseEvent e)
+        +mouseMoved(MouseEvent e)
+    }
+
+    class ScaleState {
+        -GameModel model
+        -MainView view
+        -CommandHandler handler
+        +mousePressed(MouseEvent e)
+        +mouseReleased(MouseEvent e)
+        +mouseDragged(MouseEvent e)
+        +mouseMoved(MouseEvent e)
+    }
+
+    class TranslateState {
+        -GameModel model
+        -MainView view
+        -CommandHandler handler
+        +mousePressed(MouseEvent e)
+        +mouseReleased(MouseEvent e)
+        +mouseDragged(MouseEvent e)
+        +mouseMoved(MouseEvent e)
+    }
+
+    class Controller {
+        -ControllerState currentState
+        -GameModel model
+        -MainView view
+        -CommandHandler handler
+        +Controller(MainView view, CommandHandler handler, HardModeTimer hardModeTimer)
+    }
+
+    ControllerState <|.. AddShapeState
+    ControllerState <|.. RemoveState
+    ControllerState <|.. ScaleState
+    ControllerState <|.. TranslateState
+    Controller o-- ControllerState : delegates to
