@@ -145,6 +145,11 @@ public class GameModel extends Observable {
         blueShapes.remove(shapeToRemove);
     }
 
+    public void resetBlueShapes() {
+        blueShapes.clear();
+        notifyObservers();
+    }
+
     public void hideRedShapes() {
         redShapesVisible = false;
         notifyObservers();

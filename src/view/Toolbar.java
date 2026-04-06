@@ -11,6 +11,8 @@ public class Toolbar extends JPanel {
     private JLabel scoreText;
     private JLabel currentScoreText;
     private JLabel roundLabel;
+    private JLabel twoPlayerInfo;
+    private JButton btnTerminer;
     private JToggleButton btnDraw;
     private JToggleButton btnScale;
     private JToggleButton btnMove;
@@ -57,12 +59,21 @@ public class Toolbar extends JPanel {
         scorePanel.setOpaque(false);
         roundLabel = new JLabel("Manche 1 / 10");
         roundLabel.setPreferredSize(new Dimension(110, 20));
-        scoreText = new JLabel("Score : ");
+        scoreText = new JLabel("  |  Score : ");
         currentScoreText = new JLabel("0%");
         currentScoreText.setPreferredSize(new Dimension(45, 20));
+        twoPlayerInfo = new JLabel("");
+        twoPlayerInfo.setFont(twoPlayerInfo.getFont().deriveFont(11f));
+        twoPlayerInfo.setVisible(false);
         scorePanel.add(roundLabel);
         scorePanel.add(scoreText);
         scorePanel.add(currentScoreText);
+        scorePanel.add(twoPlayerInfo);
+
+        btnTerminer = new JButton("Terminer le dessin");
+        btnTerminer.setVisible(false);
+        rightPanel.add(Box.createHorizontalStrut(10));
+        rightPanel.add(btnTerminer);
 
         this.add(leftPanel, BorderLayout.WEST);
         this.add(rightPanel, BorderLayout.EAST);
@@ -77,6 +88,23 @@ public class Toolbar extends JPanel {
     public void updateRound(int current, int total) {
         roundLabel.setText("Manche " + current + " / " + total);
     }
+
+    public void switchToTwoPlayerMode() {
+        roundLabel.setVisible(false);
+        scoreText.setVisible(false);
+        currentScoreText.setVisible(false);
+        twoPlayerInfo.setVisible(true);
+    }
+
+    public void updateTwoPlayerInfo(String text) {
+        twoPlayerInfo.setText(text);
+    }
+
+    public void showTerminerButton(boolean visible) {
+        btnTerminer.setVisible(visible);
+    }
+
+    public JButton getBtnTerminer() { return btnTerminer; }
 
     public JToggleButton getBtnCircle() { return btnCircle; }
     public JToggleButton getBtnRectangle() { return btnRectangle; }

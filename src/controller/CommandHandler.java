@@ -29,4 +29,9 @@ public class CommandHandler {
         last.operate();
         doneCommands.add(last);
     }
+
+    public void reset() {
+        doneCommands.clear();
+        undoneCommands.clear();
+    }
 }

@@ -1,16 +1,24 @@
 package view;
 
 import model.GameModel;
+import model.Point;
 import model.shapes.Shape;
 import model.shapes.Circle;
 import model.shapes.Rectangle;
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class DrawingCanvas extends JPanel {
     private GameModel model;
     private Shape previewShape = null;
     private Color previewColor = Color.BLUE;
+    private boolean showShapeNumbers = false;
+
+    public void setShowShapeNumbers(boolean show) {
+        this.showShapeNumbers = show;
+        repaint();
+    }
 
     public DrawingCanvas(GameModel model) {
         this.model = model;
@@ -36,10 +44,12 @@ public class DrawingCanvas extends JPanel {
             drawShape(g, s);
         }
 
-        if(previewShape!=null){
+        if (previewShape != null) {
             g.setColor(previewColor);
             drawShape(g, previewShape);
         }
+
+        if (showShapeNumbers) drawShapeNumbers(g);
 
         drawGizmo(g);
     }
@@ -80,6 +90,29 @@ public class DrawingCanvas extends JPanel {
         int w = Math.abs(r.getStart().getX() - r.getEnd().getX());
         int h = Math.abs(r.getStart().getY() - r.getEnd().getY());
         return new int[][]{{x, y}, {x + w, y}, {x, y + h}, {x + w, y + h}};
+    }
+
+    private void drawShapeNumbers(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 16));
+        FontMetrics fm = g.getFontMetrics();
+        List<Shape> shapes = model.getBlueShapes();
+        for (int i = 0; i < shapes.size(); i++) {
+            String num = String.valueOf(i + 1);
+            Point center = getShapeCenter(shapes.get(i));
+            int x = center.getX() - fm.stringWidth(num) / 2;
+            int y = center.getY() + fm.getAscent() / 2 - 2;
+            g.drawString(num, x, y);
+        }
+    }
+
+    private Point getShapeCenter(Shape s) {
+        if (s instanceof Circle) return ((Circle) s).getCenter();
+        if (s instanceof Rectangle) {
+            Rectangle r = (Rectangle) s;
+            return new Point((r.getMinX() + r.getMaxX()) / 2, (r.getMinY() + r.getMaxY()) / 2);
+        }
+        return new Point(0, 0);
     }
 
     private void drawShape(Graphics g, Shape s) {

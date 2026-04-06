@@ -2,6 +2,7 @@ package view;
 
 import model.GameModel;
 import model.Observer;
+import model.TwoPlayerGame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -57,6 +58,31 @@ public class MainView extends JFrame implements Observer {
             this,
             "Manche " + model.getCurrentRound() + " terminée !\nScore : " + score + "%\n\nManche " + next + " sur " + GameModel.ROUND_COUNT + "...",
             "Manche suivante",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    public void switchToTwoPlayerMode() {
+        toolbar.switchToTwoPlayerMode();
+    }
+
+    public void showRoundResultDialog(int reproducer, float score, int round) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Manche " + round + " terminée !\nJoueur " + reproducer + " — Score : " + (int) score + " / 100",
+            "Résultat de la manche",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    public void showFinalTwoPlayerScoreDialog(TwoPlayerGame game) {
+        int s1 = Math.round(game.getPlayer1Score() / (TwoPlayerGame.ROUND_COUNT / 2));
+        int s2 = Math.round(game.getPlayer2Score() / (TwoPlayerGame.ROUND_COUNT / 2));
+        String winner = s1 > s2 ? "Joueur 1" : s2 > s1 ? "Joueur 2" : "Égalité !";
+        JOptionPane.showMessageDialog(
+            this,
+            "Partie terminée !\n\nJoueur 1 : " + s1 + " / 100\nJoueur 2 : " + s2 + " / 100\n\nVainqueur : " + winner,
+            "Fin de partie — 2 Joueurs",
             JOptionPane.INFORMATION_MESSAGE
         );
     }
