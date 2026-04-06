@@ -10,6 +10,7 @@ public class Toolbar extends JPanel {
     private JButton btnRedo;
     private JLabel scoreText;
     private JLabel currentScoreText;
+    private JLabel roundLabel;
     private JToggleButton btnDraw;
     private JToggleButton btnScale;
     private JToggleButton btnMove;
@@ -52,21 +53,29 @@ public class Toolbar extends JPanel {
         rightPanel.add(btnUndo);
         rightPanel.add(btnRedo);
 
-        JPanel scorePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel scorePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
         scorePanel.setOpaque(false);
+        roundLabel = new JLabel("Manche 1 / 10");
+        roundLabel.setPreferredSize(new Dimension(110, 20));
         scoreText = new JLabel("Score : ");
-        currentScoreText = new JLabel("0");
+        currentScoreText = new JLabel("0%");
+        currentScoreText.setPreferredSize(new Dimension(45, 20));
+        scorePanel.add(roundLabel);
         scorePanel.add(scoreText);
         scorePanel.add(currentScoreText);
-
 
         this.add(leftPanel, BorderLayout.WEST);
         this.add(rightPanel, BorderLayout.EAST);
         this.add(scorePanel, BorderLayout.CENTER);
+        this.setPreferredSize(new Dimension(0, 40));
     }
 
-    public void updateScore(float newScore){
+    public void updateScore(float newScore) {
         currentScoreText.setText((int) newScore + "%");
+    }
+
+    public void updateRound(int current, int total) {
+        roundLabel.setText("Manche " + current + " / " + total);
     }
 
     public JToggleButton getBtnCircle() { return btnCircle; }

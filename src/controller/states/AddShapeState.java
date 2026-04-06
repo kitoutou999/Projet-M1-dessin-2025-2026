@@ -33,7 +33,13 @@ public class AddShapeState implements ControllerState {
             if (!model.isIntersecting(shape)) {
                 handler.executeCommand(new AddShapeCommand(shape, model));
                 if (model.isGameOver()) {
-                    view.showGameOverDialog();
+                    model.recordScore();
+                    if (model.isLastRound()) {
+                        view.showFinalScoreDialog();
+                    } else {
+                        view.showNextRoundDialog();
+                        model.loadNextLevel();
+                    }
                 }
             }
             firstClickPoint = null;

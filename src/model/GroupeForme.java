@@ -20,6 +20,11 @@ public class GroupeForme extends Observable implements Observer {
         notifyObservers();
     }
 
+    public void clear() {
+        List<Shape> copy = new ArrayList<>(shapes);
+        for (Shape s : copy) remove(s);
+    }
+
     public List<Shape> getShapes() {
         return shapes;
     }

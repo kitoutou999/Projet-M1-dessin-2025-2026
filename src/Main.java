@@ -1,8 +1,11 @@
 import controller.CommandHandler;
 import controller.Controller;
-import model.*;
-import model.shapes.Circle;
-import model.shapes.Rectangle;
+import model.GameModel;
+import model.GameSettings;
+import model.LevelType;
+import model.strategy.LevelStrategy;
+import model.strategy.PresetLevelStrategy;
+import model.strategy.RandomLevelStrategy;
 import view.MainView;
 import view.ModeSelectionDialog;
 
@@ -13,14 +16,16 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
 
             GameSettings settings = ModeSelectionDialog.show(null);
+            if (settings == null) return;
 
-            GameModel model = new GameModel();
+            LevelStrategy strategy = settings.getLevelType() == LevelType.RANDOM
+                    ? new RandomLevelStrategy()
+                    : new PresetLevelStrategy();
+
+            GameModel model = new GameModel(strategy);
             MainView view = new MainView(model);
             CommandHandler handler = new CommandHandler();
             Controller controller = new Controller(view, handler);
-
-            model.addRedShape(new Circle(new Point(100, 100), 50));
-            model.addRedShape(new Rectangle(new Point(300, 100), new Point(400, 200)));
 
             view.setVisible(true);
         });

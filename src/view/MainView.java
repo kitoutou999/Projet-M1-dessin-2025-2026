@@ -27,6 +27,7 @@ public class MainView extends JFrame implements Observer {
         this.add(drawingCanvas, BorderLayout.CENTER);
 
         this.pack();
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
 
@@ -41,17 +42,32 @@ public class MainView extends JFrame implements Observer {
     @Override
     public void update() {
         this.drawingCanvas.repaint();
-        this.toolbar.updateScore(model.getScore()); 
+        this.toolbar.updateScore(model.getScore());
+        this.toolbar.updateRound(model.getCurrentRound(), GameModel.ROUND_COUNT);
     }
 
     public GameModel getModel() {
         return this.model;
     }
 
-    public void showGameOverDialog() {
+    public void showNextRoundDialog() {
         int score = Math.round(model.getScore());
-        String message = " Partie terminée !\n Score : "+score+" de la surface occupée.";
+        int next  = model.getCurrentRound() + 1;
+        JOptionPane.showMessageDialog(
+            this,
+            "Manche " + model.getCurrentRound() + " terminée !\nScore : " + score + "%\n\nManche " + next + " sur " + GameModel.ROUND_COUNT + "...",
+            "Manche suivante",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+    }
 
-        JOptionPane.showMessageDialog(this, message, "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
+    public void showFinalScoreDialog() {
+        int global = Math.round(model.getGlobalScore());
+        JOptionPane.showMessageDialog(
+            this,
+            "Partie terminée !\nScore global : " + global + "% (moyenne sur " + GameModel.ROUND_COUNT + " manches).",
+            "Fin de partie",
+            JOptionPane.INFORMATION_MESSAGE
+        );
     }
 }

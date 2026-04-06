@@ -2,23 +2,56 @@ package model;
 
 import model.shapes.Shape;
 import model.shapes.ShapeType;
+import model.strategy.LevelStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameModel extends Observable {
     public static final int MAX_BLUE_SHAPES = 4;
+    public static final int ROUND_COUNT     = 10;
 
+    private final LevelStrategy levelStrategy;
     private List<Shape> redShapes;
     private GroupeForme blueShapes;
     private ShapeType currentShapeType;
-    private int canvasWidth = 800;
+    private int canvasWidth  = 800;
     private int canvasHeight = 600;
 
-    public GameModel() {
-        this.redShapes = new ArrayList<>();
+    private int currentRound = 1;
+    private final List<Float> roundScores = new ArrayList<>();
+
+    public GameModel(LevelStrategy levelStrategy) {
+        this.levelStrategy = levelStrategy;
         this.blueShapes = new GroupeForme();
         this.currentShapeType = ShapeType.CIRCLE;
+        this.redShapes = new ArrayList<>(levelStrategy.generateLevel());
+    }
+
+    public void recordScore() {
+        roundScores.add(getScore());
+    }
+
+    public void loadNextLevel() {
+        currentRound++;
+        blueShapes.clear();
+        this.redShapes = new ArrayList<>(levelStrategy.generateLevel());
+        notifyObservers();
+    }
+
+    public boolean isLastRound() {
+        return currentRound >= ROUND_COUNT;
+    }
+
+    public int getCurrentRound() {
+        return currentRound;
+    }
+
+    public float getGlobalScore() {
+        if (roundScores.isEmpty()) return 0;
+        float sum = 0;
+        for (float s : roundScores) sum += s;
+        return sum / roundScores.size();
     }
 
     public boolean isIntersecting(Shape newShape) {
