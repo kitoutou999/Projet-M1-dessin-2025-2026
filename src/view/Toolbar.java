@@ -66,7 +66,7 @@ public class Toolbar extends JPanel {
     }
 
     public void updateScore(float newScore){
-        currentScoreText.setText(String.valueOf((int) newScore));
+        currentScoreText.setText((int) newScore + "%");
     }
 
     public JToggleButton getBtnCircle() { return btnCircle; }

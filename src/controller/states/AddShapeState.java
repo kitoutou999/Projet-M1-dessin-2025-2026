@@ -23,6 +23,8 @@ public class AddShapeState implements ControllerState {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        if (model.isGameOver()) return;
+
         Point clickPoint = new Point(e.getX(), e.getY());
         if (firstClickPoint == null) {
             firstClickPoint = clickPoint;
@@ -30,6 +32,9 @@ public class AddShapeState implements ControllerState {
             Shape shape = model.getCurrentShapeType().createFrom(firstClickPoint, clickPoint);
             if (!model.isIntersecting(shape)) {
                 handler.executeCommand(new AddShapeCommand(shape, model));
+                if (model.isGameOver()) {
+                    view.showGameOverDialog();
+                }
             }
             firstClickPoint = null;
             view.getDrawingCanvas().setPreviewShape(null, true);

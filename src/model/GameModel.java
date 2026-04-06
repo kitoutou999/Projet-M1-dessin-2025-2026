@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameModel extends Observable {
+    public static final int MAX_BLUE_SHAPES = 4;
+
     private List<Shape> redShapes;
     private GroupeForme blueShapes;
     private ShapeType currentShapeType;
@@ -55,7 +57,11 @@ public class GameModel extends Observable {
         for (Shape shape : blueShapes.getShapes()) {
             totalArea += shape.getArea();
         }
-        return totalArea / 1000;
+        return totalArea / (canvasWidth * canvasHeight) * 100f;
+    }
+
+    public boolean isGameOver() {
+        return blueShapes.getShapes().size() >= MAX_BLUE_SHAPES;
     }
 
     public ShapeType getCurrentShapeType() {
@@ -84,6 +90,7 @@ public class GameModel extends Observable {
 
     public void addBlueShape(Shape f) {
         blueShapes.add(f);
+        notifyObservers();
     }
 
     public void addRedShape(Shape f) {

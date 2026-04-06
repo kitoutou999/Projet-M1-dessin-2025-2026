@@ -4,6 +4,7 @@ import model.GameModel;
 import model.Observer;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class MainView extends JFrame implements Observer {
     private GameModel model;
@@ -45,5 +46,12 @@ public class MainView extends JFrame implements Observer {
 
     public GameModel getModel() {
         return this.model;
+    }
+
+    public void showGameOverDialog() {
+        int score = Math.round(model.getScore());
+        String message = " Partie terminée !\n Score : "+score+" de la surface occupée.";
+
+        JOptionPane.showMessageDialog(this, message, "Fin de partie", JOptionPane.INFORMATION_MESSAGE);
     }
 }
