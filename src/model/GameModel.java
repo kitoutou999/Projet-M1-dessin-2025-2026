@@ -143,6 +143,7 @@ public class GameModel extends Observable {
 
     public void removeBlueShape(Shape shapeToRemove) {
         blueShapes.remove(shapeToRemove);
+        notifyObservers();
     }
 
     public void resetBlueShapes() {
