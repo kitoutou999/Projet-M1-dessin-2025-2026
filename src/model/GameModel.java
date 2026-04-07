@@ -7,6 +7,12 @@ import model.strategy.LevelStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Représente le modèle principal du jeu.
+ * Contient l'état du jeu, les formes, le score, les paramètres, la taille de la fenetre et le round actuel.
+ * 
+ * Cette classe suit le pattern MVC pour pouvoir notifier les observateurs lors des changements d'etat.
+ */
 public class GameModel extends Observable {
     public static final int MAX_BLUE_SHAPES = 4;
     public static final int ROUND_COUNT     = 10;

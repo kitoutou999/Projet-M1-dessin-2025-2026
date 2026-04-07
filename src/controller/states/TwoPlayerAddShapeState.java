@@ -7,7 +7,12 @@ import model.Point;
 import model.shapes.Shape;
 import view.MainView;
 import java.awt.event.MouseEvent;
-
+/**
+ * État du contrôleur permettant d'ajouter une forme dans le cas d'un jeu à deux joueurs.
+ * 
+ * Cette classe fait partie du pattern State et définit
+ * le comportement du contrôleur lors de l'ajout de formes.
+ */
 public class TwoPlayerAddShapeState implements ControllerState {
 
     private final GameModel    model;

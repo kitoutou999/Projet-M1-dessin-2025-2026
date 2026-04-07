@@ -3,7 +3,12 @@ package controller.commands;
 import model.GameModel;
 import model.Point;
 import model.shapes.Shape;
-
+/**
+ * Commande permettant de modifier les dimensions d'une forme.
+ * 
+ * Implémente le pattern Command pour permettre l'exécution
+ * et éventuellement l'annulation d'une action utilisateur.
+ */
 public class ScaleCommand implements OperationCommand {
     private Shape shape;
     private Point anchor;
