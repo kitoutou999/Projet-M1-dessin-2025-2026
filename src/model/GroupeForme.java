@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Composite de formes : agrège plusieurs Shape et se comporte lui-même comme une Shape.
- * Implémente le pattern Composite — toute opération est déléguée à chaque enfant.
+ * Implémente le pattern Composite - toute opération est déléguée à chaque enfant.
  */
 public class GroupeForme extends Shape implements Observer {
 
