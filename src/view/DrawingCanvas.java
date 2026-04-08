@@ -67,7 +67,12 @@ public class DrawingCanvas extends JPanel implements Observer {
         }
 
         if (previewShape != null) {
-            g.setColor(placable ? scheme.getPreviewValidColor() : scheme.getPreviewInvalidColor());
+            if(model.isRedShapesVisible()){
+            	g.setColor(placable ? scheme.getPreviewValidColor() : scheme.getPreviewInvalidColor());
+            }
+            else{
+            	g.setColor(scheme.getPreviewValidColor());
+            }
             drawShape(g, previewShape);
         }
 
