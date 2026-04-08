@@ -1,18 +1,23 @@
 package view;
 
 import model.GameModel;
+import model.Observer;
 import model.Point;
 import model.shapes.Shape;
 import model.shapes.Circle;
 import model.shapes.Rectangle;
+import plugin.theme.ThemeManager;
+import plugin.theme.ColorScheme;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class DrawingCanvas extends JPanel {
+public class DrawingCanvas extends JPanel implements Observer {
     private GameModel model;
+    private ThemeManager themeManager;
     private Shape previewShape = null;
-    private Color previewColor = Color.BLUE;
+    private boolean placable = true;
     private boolean showShapeNumbers = false;
 
     public void setShowShapeNumbers(boolean show) {
@@ -20,49 +25,55 @@ public class DrawingCanvas extends JPanel {
         repaint();
     }
 
-    public DrawingCanvas(GameModel model) {
+    public DrawingCanvas(GameModel model, ThemeManager themeManager) {
         this.model = model;
-        this.setBackground(Color.WHITE);
+        this.themeManager = themeManager;
+        themeManager.addObserver(this);
+        this.setBackground(themeManager.getScheme().getCanvasBackground());
         this.setPreferredSize(new Dimension(model.getCanvasWidth(), model.getCanvasHeight()));
         this.setFocusable(true);
+    }
+
+    /** Appelé par ThemeManager quand le thème change. */
+    @Override
+    public void update() {
+        this.setBackground(themeManager.getScheme().getCanvasBackground());
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        ColorScheme scheme = themeManager.getScheme();
         Graphics2D g2D = (Graphics2D) g;
         AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
         g2D.setComposite(ac);
 
-        g.setColor(Color.RED);
+        g.setColor(scheme.getRedShapeColor());
         for (Shape s : model.getRedShapes()) {
             drawShape(g, s);
         }
 
-        g.setColor(Color.BLUE);
+        g.setColor(scheme.getBlueShapeColor());
         for (Shape s : model.getBlueShapes()) {
             drawShape(g, s);
         }
 
         if (previewShape != null) {
-            g.setColor(previewColor);
+            g.setColor(placable ? scheme.getPreviewValidColor() : scheme.getPreviewInvalidColor());
             drawShape(g, previewShape);
         }
 
-        if (showShapeNumbers) drawShapeNumbers(g);
+        if (showShapeNumbers) drawShapeNumbers(g, scheme);
 
-        drawGizmo(g);
+        drawGizmo(g, scheme);
     }
 
     private Shape gizmoShape = null;
 
-    public void setPreviewShape(Shape s,boolean placable) {
-        if(!placable){
-            previewColor = Color.RED;
-        }else{
-            previewColor = Color.GREEN;
-        }
-        previewShape = s;
+    public void setPreviewShape(Shape s, boolean placable) {
+        this.placable = placable;
+        this.previewShape = s;
         repaint();
     }
 
@@ -92,8 +103,8 @@ public class DrawingCanvas extends JPanel {
         return new int[][]{{x, y}, {x + w, y}, {x, y + h}, {x + w, y + h}};
     }
 
-    private void drawShapeNumbers(Graphics g) {
-        g.setColor(Color.WHITE);
+    private void drawShapeNumbers(Graphics g, ColorScheme scheme) {
+        g.setColor(scheme.getShapeNumberColor());
         g.setFont(new Font("Arial", Font.BOLD, 16));
         FontMetrics fm = g.getFontMetrics();
         List<Shape> shapes = model.getBlueShapes();
@@ -132,8 +143,8 @@ public class DrawingCanvas extends JPanel {
         }
     }
 
-    private void drawGizmo(Graphics g) {
-        g.setColor(Color.MAGENTA);
+    private void drawGizmo(Graphics g, ColorScheme scheme) {
+        g.setColor(scheme.getGizmoColor());
         if (gizmoShape instanceof Rectangle) {
             Rectangle r = (Rectangle) gizmoShape;
             int x = r.getMinX();

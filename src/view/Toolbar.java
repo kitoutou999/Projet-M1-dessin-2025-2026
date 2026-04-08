@@ -1,9 +1,15 @@
 package view;
 
+import model.Observer;
+import plugin.theme.ColorScheme;
+import plugin.theme.ThemeManager;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Toolbar extends JPanel {
+public class Toolbar extends JPanel implements Observer {
     private JToggleButton btnCircle;
     private JToggleButton btnRectangle;
     private JButton btnUndo;
@@ -18,10 +24,21 @@ public class Toolbar extends JPanel {
     private JToggleButton btnMove;
     private JToggleButton btnRemove;
 
-    public Toolbar() {
+    private JPanel leftPanel;
+    private JPanel rightPanel;
+    private JPanel scorePanel;
+
+    private final ThemeManager themeManager;
+    private final List<AbstractButton> allButtons = new ArrayList<>();
+    private final List<JLabel> allLabels = new ArrayList<>();
+
+    public Toolbar(ThemeManager themeManager) {
+        this.themeManager = themeManager;
+        themeManager.addObserver(this);
+
         this.setLayout(new BorderLayout());
 
-        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         leftPanel.setOpaque(false);
         btnCircle = new JToggleButton("Cercle");
         btnRectangle = new JToggleButton("Rectangle");
@@ -32,7 +49,7 @@ public class Toolbar extends JPanel {
         leftPanel.add(btnCircle);
         leftPanel.add(btnRectangle);
 
-        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightPanel.setOpaque(false);
         btnDraw = new JToggleButton("Draw");
         btnScale = new JToggleButton("Scale");
@@ -55,7 +72,7 @@ public class Toolbar extends JPanel {
         rightPanel.add(btnUndo);
         rightPanel.add(btnRedo);
 
-        JPanel scorePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
+        scorePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
         scorePanel.setOpaque(false);
         roundLabel = new JLabel("Manche 1 / 10");
         roundLabel.setPreferredSize(new Dimension(110, 20));
@@ -79,6 +96,38 @@ public class Toolbar extends JPanel {
         this.add(rightPanel, BorderLayout.EAST);
         this.add(scorePanel, BorderLayout.CENTER);
         this.setPreferredSize(new Dimension(0, 40));
+
+        // Collecter tous les boutons et labels pour l'application du thème
+        allButtons.add(btnCircle); allButtons.add(btnRectangle);
+        allButtons.add(btnDraw); allButtons.add(btnScale);
+        allButtons.add(btnMove); allButtons.add(btnRemove);
+        allButtons.add(btnUndo); allButtons.add(btnRedo);
+        allButtons.add(btnTerminer);
+
+        allLabels.add(roundLabel); allLabels.add(scoreText);
+        allLabels.add(currentScoreText); allLabels.add(twoPlayerInfo);
+
+        applyTheme(themeManager.getScheme());
+    }
+
+    /** Appelé par ThemeManager quand le thème change. */
+    @Override
+    public void update() {
+        applyTheme(themeManager.getScheme());
+    }
+
+    private void applyTheme(ColorScheme scheme) {
+        this.setBackground(scheme.getToolbarBackground());
+        for (JLabel label : allLabels) {
+            label.setForeground(scheme.getForeground());
+        }
+        for (AbstractButton btn : allButtons) {
+            btn.setBackground(scheme.getButtonBackground());
+            btn.setForeground(scheme.getButtonForeground());
+            btn.setOpaque(true);
+            btn.setBorderPainted(false);
+        }
+        repaint();
     }
 
     public void updateScore(float newScore) {
@@ -105,7 +154,6 @@ public class Toolbar extends JPanel {
     }
 
     public JButton getBtnTerminer() { return btnTerminer; }
-
     public JToggleButton getBtnCircle() { return btnCircle; }
     public JToggleButton getBtnRectangle() { return btnRectangle; }
     public JButton getBtnUndo() { return btnUndo; }

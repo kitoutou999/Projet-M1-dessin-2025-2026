@@ -6,6 +6,7 @@ import model.*;
 import model.strategy.LevelStrategy;
 import model.strategy.PresetLevelStrategy;
 import model.strategy.RandomLevelStrategy;
+import plugin.theme.ThemeManager;
 import view.MainView;
 import view.ModeSelectionDialog;
 
@@ -19,21 +20,25 @@ public class Main {
             GameSettings settings = ModeSelectionDialog.show(null);
             if (settings == null) return;
 
+            // Le ThemeManager est créé ici et injecté dans toute l'application.
+            // Les plug-ins y accèdent via AppContext (injection de dépendance).
+            ThemeManager themeManager = new ThemeManager();
+
             if (settings.getMode() == GameMode.TWO_PLAYERS) {
-                startTwoPlayerMode();
+                startTwoPlayerMode(themeManager);
             } else {
-                startSoloMode(settings);
+                startSoloMode(settings, themeManager);
             }
         });
     }
 
-    private static void startSoloMode(GameSettings settings) {
+    private static void startSoloMode(GameSettings settings, ThemeManager themeManager) {
         LevelStrategy strategy = settings.getLevelType() == LevelType.RANDOM
                 ? new RandomLevelStrategy()
                 : new PresetLevelStrategy();
 
         GameModel model = new GameModel(strategy);
-        MainView view = new MainView(model);
+        MainView view = new MainView(model, themeManager);
         CommandHandler handler = new CommandHandler();
 
         HardModeTimer hardModeTimer = settings.getDifficulty() == Difficulty.HARD
@@ -44,10 +49,10 @@ public class Main {
         view.setVisible(true);
     }
 
-    private static void startTwoPlayerMode() {
+    private static void startTwoPlayerMode(ThemeManager themeManager) {
         GameModel model = new GameModel(() -> new ArrayList<>());
         TwoPlayerGame game = new TwoPlayerGame();
-        MainView view = new MainView(model);
+        MainView view = new MainView(model, themeManager);
         view.switchToTwoPlayerMode();
         CommandHandler handler = new CommandHandler();
         new TwoPlayerController(view, handler, game);
