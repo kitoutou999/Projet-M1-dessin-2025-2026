@@ -3,7 +3,8 @@ package controller;
 import controller.states.*;
 import model.*;
 import model.shapes.Shape;
-import model.shapes.ShapeType;
+import model.shapes.CircleFactory;
+import model.shapes.RectangleFactory;
 import view.MainView;
 
 import javax.swing.JToggleButton;
@@ -45,8 +46,8 @@ public class TwoPlayerController implements Observer {
     }
 
     private void setupToolbarListeners() {
-        view.getToolbar().getBtnCircle().addActionListener(e -> model.setCurrentShapeType(ShapeType.CIRCLE));
-        view.getToolbar().getBtnRectangle().addActionListener(e -> model.setCurrentShapeType(ShapeType.RECTANGLE));
+        view.getToolbar().getBtnCircle().addActionListener(e -> model.setShapeFactory(new CircleFactory()));
+        view.getToolbar().getBtnRectangle().addActionListener(e -> model.setShapeFactory(new RectangleFactory()));
 
         view.getToolbar().getBtnDraw().addActionListener(e -> {
             if (((JToggleButton) e.getSource()).isSelected())

@@ -34,7 +34,7 @@ public class TwoPlayerAddShapeState implements ControllerState {
         if (firstClickPoint == null) {
             firstClickPoint = clickPoint;
         } else {
-            Shape shape = model.getCurrentShapeType().createFrom(firstClickPoint, clickPoint);
+            Shape shape = model.getShapeFactory().createShape(firstClickPoint, clickPoint);
             if (!model.isIntersecting(shape)) {
                 handler.executeCommand(new AddShapeCommand(shape, model));
             }
@@ -50,7 +50,7 @@ public class TwoPlayerAddShapeState implements ControllerState {
     public void mouseMoved(MouseEvent e) {
         if (firstClickPoint == null) return;
         Point current = new Point(e.getX(), e.getY());
-        Shape preview = model.getCurrentShapeType().createFrom(firstClickPoint, current);
+        Shape preview = model.getShapeFactory().createShape(firstClickPoint, current);
         view.getDrawingCanvas().setPreviewShape(preview, !model.isIntersecting(preview));
     }
 }

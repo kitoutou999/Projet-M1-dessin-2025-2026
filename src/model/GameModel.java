@@ -1,7 +1,8 @@
 package model;
 
+import model.shapes.CircleFactory;
 import model.shapes.Shape;
-import model.shapes.ShapeType;
+import model.shapes.ShapeFactory;
 import model.strategy.LevelStrategy;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class GameModel extends Observable {
     private final LevelStrategy levelStrategy;
     private List<Shape> redShapes;
     private GroupeForme blueShapes;
-    private ShapeType currentShapeType;
+    private ShapeFactory shapeFactory;
     private int canvasWidth  = 1200;
     private int canvasHeight = 800;
 
@@ -31,7 +32,7 @@ public class GameModel extends Observable {
     public GameModel(LevelStrategy levelStrategy) {
         this.levelStrategy = levelStrategy;
         this.blueShapes = new GroupeForme();
-        this.currentShapeType = ShapeType.CIRCLE;
+        this.shapeFactory = new CircleFactory();
         this.redShapes = new ArrayList<>(levelStrategy.generateLevel());
     }
 
@@ -105,12 +106,12 @@ public class GameModel extends Observable {
         return blueShapes.getShapes().size() >= MAX_BLUE_SHAPES;
     }
 
-    public ShapeType getCurrentShapeType() {
-        return currentShapeType;
+    public ShapeFactory getShapeFactory() {
+        return shapeFactory;
     }
 
-    public void setCurrentShapeType(ShapeType currentShapeType) {
-        this.currentShapeType = currentShapeType;
+    public void setShapeFactory(ShapeFactory factory) {
+        this.shapeFactory = factory;
     }
 
     public List<Shape> getRedShapes() {

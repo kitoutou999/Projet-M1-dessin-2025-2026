@@ -2,7 +2,8 @@ package controller;
 
 import controller.states.*;
 import model.*;
-import model.shapes.ShapeType;
+import model.shapes.CircleFactory;
+import model.shapes.RectangleFactory;
 import view.MainView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -37,8 +38,8 @@ public class Controller {
             public void mouseMoved(MouseEvent e) { currentState.mouseMoved(e); }
         });
 
-        this.view.getToolbar().getBtnCircle().addActionListener(e -> model.setCurrentShapeType(ShapeType.CIRCLE));
-        this.view.getToolbar().getBtnRectangle().addActionListener(e -> model.setCurrentShapeType(ShapeType.RECTANGLE));
+        this.view.getToolbar().getBtnCircle().addActionListener(e -> model.setShapeFactory(new CircleFactory()));
+        this.view.getToolbar().getBtnRectangle().addActionListener(e -> model.setShapeFactory(new RectangleFactory()));
 
         this.view.getToolbar().getBtnDraw().addActionListener(e -> {
             if (((JToggleButton) e.getSource()).isSelected()) setState(new AddShapeState(model, view, handler, hardModeTimer));
