@@ -3,6 +3,10 @@ import model.shapes.*;
 import java.util.Random;
 import java.util.*;
 
+/**
+ * Joueur automatique capable de placer des formes de maniere intelligente.
+ * Genere plusieurs formes candidates et retient celle qui couvre le plus d'espace sans intersection.
+ */
 public class Ia{
     private GameModel model;
     public Ia(GameModel model){

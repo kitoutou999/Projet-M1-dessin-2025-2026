@@ -3,6 +3,9 @@ package model.shapes;
 import model.Collision;
 import model.Point;
 
+/**
+ * Forme representant un rectangle aligne sur les axes, defini par deux coins opposes.
+ */
 public class Rectangle extends Shape {
 
 	private Point start;

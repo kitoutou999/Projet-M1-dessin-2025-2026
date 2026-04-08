@@ -6,6 +6,10 @@ import plugin.theme.ThemeManager;
 
 import java.util.List;
 
+/**
+ * Implementation de AppContext fournie aux plugins.
+ * Donne acces aux formes du modele et au gestionnaire de themes.
+ */
 public class AppContextImpl implements AppContext {
     private final GameModel model;
     private final ThemeManager themeManager;

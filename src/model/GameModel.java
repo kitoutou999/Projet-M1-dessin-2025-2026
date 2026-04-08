@@ -95,11 +95,7 @@ public class GameModel extends Observable {
     }
 
     public float getScore() {
-        float totalArea = 0;
-        for (Shape shape : blueShapes.getShapes()) {
-            totalArea += shape.getArea();
-        }
-        return totalArea / (canvasWidth * canvasHeight) * 100f;
+        return blueShapes.getArea() / (canvasWidth * canvasHeight) * 100f;
     }
 
     public boolean isGameOver() {

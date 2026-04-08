@@ -11,6 +11,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JToggleButton;
 
+/**
+ * Controleur principal du jeu en mode solo.
+ * Gere les interactions souris et delegue les actions aux etats via le pattern State.
+ */
 public class Controller {
     private GameModel model;
     private MainView view;

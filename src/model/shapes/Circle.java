@@ -3,6 +3,9 @@ package model.shapes;
 import model.Collision;
 import model.Point;
 
+/**
+ * Forme representant un cercle, defini par un centre et un rayon.
+ */
 public class Circle extends Shape {
 
 	private Point center;

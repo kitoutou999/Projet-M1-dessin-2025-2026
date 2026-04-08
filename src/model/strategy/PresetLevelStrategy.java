@@ -14,6 +14,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Strategie de generation de niveaux a partir d'un fichier XML.
+ * Les niveaux sont lus au demarrage et distribues dans l'ordre.
+ */
 public class PresetLevelStrategy implements LevelStrategy {
 
     private final List<List<Shape>> levels;

@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Contient les parametres choisis par le joueur au demarrage : mode de jeu, difficulte et type de niveaux.
+ */
 public class GameSettings {
     private final GameMode mode;
     private final Difficulty difficulty;

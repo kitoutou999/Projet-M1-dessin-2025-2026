@@ -5,6 +5,10 @@ import model.shapes.Rectangle;
 import model.shapes.Shape;
 import java.util.List;
 
+/**
+ * Calcule le score de reproduction dans le mode deux joueurs.
+ * Compare les formes dessinees aux formes reproduites en tenant compte de la position et de la taille.
+ */
 public class ScoreCalculator {
 
     /**

@@ -2,6 +2,9 @@ package model.shapes;
 
 import model.Point;
 
+/**
+ * Cree un cercle a partir de deux points : le centre et un point sur le rayon.
+ */
 public class CircleFactory implements ShapeFactory {
     @Override
     public Shape createShape(Point p1, Point p2) {

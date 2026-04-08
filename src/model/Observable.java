@@ -3,6 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe de base du pattern Observer.
+ * Maintient une liste d'observateurs et les notifie lors de changements d'etat.
+ */
 public abstract class Observable {
     private List<Observer> observers = new ArrayList<>();
 

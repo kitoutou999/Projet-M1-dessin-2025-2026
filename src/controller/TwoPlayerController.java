@@ -13,6 +13,10 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controleur du jeu en mode deux joueurs.
+ * Gere l'alternance entre la phase de dessin et la phase de reproduction.
+ */
 public class TwoPlayerController implements Observer {
 
     private final GameModel model;

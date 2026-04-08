@@ -4,6 +4,10 @@ import model.shapes.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Modele de la partie en mode deux joueurs.
+ * Gere les phases de dessin et de reproduction, ainsi que les scores des deux joueurs.
+ */
 public class TwoPlayerGame extends Observable {
 
     public enum Phase { DRAWING, REPRODUCING }

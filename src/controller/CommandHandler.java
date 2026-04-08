@@ -5,6 +5,10 @@ import controller.commands.OperationCommand;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Gestionnaire de commandes pour le mecanisme undo/redo.
+ * Conserve deux piles : les commandes effectuees et les commandes annulees.
+ */
 public class CommandHandler {
 
     private List<OperationCommand> doneCommands = new ArrayList<>();

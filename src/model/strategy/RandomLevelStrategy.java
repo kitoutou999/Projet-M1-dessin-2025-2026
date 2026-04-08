@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Strategie de generation de niveaux aleatoires.
+ * Genere des cercles et rectangles rouges sans chevauchement a chaque manche.
+ */
 public class RandomLevelStrategy implements LevelStrategy {
 
     private static final int CANVAS_WIDTH  = 1200;
