@@ -3,8 +3,8 @@ CHEPY Maxim
 GUILLAIS Marius
 DAVID Tom
 
-Lancement du projet :
-	-./compile.sh
-	-./run.sh
+Pour compiler le projet : ./compile.sh
+
+Pour lancer le projet : ./run.sh
 
 
