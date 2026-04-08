@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class RandomLevelStrategy implements LevelStrategy {
 
-    private static final int CANVAS_WIDTH  = 800;
-    private static final int CANVAS_HEIGHT = 600;
+    private static final int CANVAS_WIDTH  = 1200;
+    private static final int CANVAS_HEIGHT = 800;
     private static final int SHAPE_COUNT   = 3;
     private static final int MIN_RADIUS    = 30;
     private static final int MAX_RADIUS    = 80;

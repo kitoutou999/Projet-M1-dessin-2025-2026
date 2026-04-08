@@ -21,8 +21,8 @@ public class GameModel extends Observable {
     private List<Shape> redShapes;
     private GroupeForme blueShapes;
     private ShapeType currentShapeType;
-    private int canvasWidth  = 800;
-    private int canvasHeight = 600;
+    private int canvasWidth  = 1200;
+    private int canvasHeight = 800;
 
     private int currentRound = 1;
     private final List<Float> roundScores = new ArrayList<>();
