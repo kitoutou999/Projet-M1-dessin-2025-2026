@@ -3,6 +3,10 @@ package controller;
 import model.GameModel;
 import javax.swing.Timer;
 
+/**
+ * Comportement représentant le mode de jeu Timer
+ * Contient toutes les méthodes qui y sont associées (compter, commencer, arrêter)
+ */
 public class HardModeTimer {
 
     private static final int DELAY_MS = 5000;

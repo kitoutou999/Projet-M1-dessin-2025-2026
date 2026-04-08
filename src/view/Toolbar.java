@@ -9,6 +9,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe de la composante Toolbar de la vue en jeu
+ * Contient toutes les actions possibles sous forme de boutons et les informations sur le déroulement de la partie
+ */
 public class Toolbar extends JPanel implements Observer {
     private JToggleButton btnCircle;
     private JToggleButton btnRectangle;

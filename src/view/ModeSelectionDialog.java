@@ -9,6 +9,12 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
+
+/**
+ * Classe de ModeSelectionDialog,la vue de séléction de jeu
+ * Contient tous les divers modes de jeu et paramètres activables avant de lancer une partie
+ * 
+ */
 public class ModeSelectionDialog extends JDialog {
 
     private final JRadioButton btnSolo = new JRadioButton("Solo", true);

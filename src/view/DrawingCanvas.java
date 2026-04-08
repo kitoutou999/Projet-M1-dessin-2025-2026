@@ -13,6 +13,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+
+
+/**
+ * Classe de la composante DrawingCanvas de la vue en jeu
+ * Contient toutes les formes déjà créées et dessinées et la zone dans laquelle les joueurs placent leurs formes
+ * 
+ */
 public class DrawingCanvas extends JPanel implements Observer {
     private GameModel model;
     private ThemeManager themeManager;

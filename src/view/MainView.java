@@ -13,6 +13,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+
+/**
+ * Classe de la vue en jeu de manière globale
+ * Contient et unis les composantes ToolBar et DrawingCanvas pour créer la fenêtre de jeu d'une partie
+ * 
+ */
 public class MainView extends JFrame implements Observer {
     private GameModel model;
     private DrawingCanvas drawingCanvas;

@@ -1,4 +1,8 @@
 package model;
+/**
+ * Classe implémentant ce qu'est un Point,composant qui compose nos formes
+ * 
+ */
 
 public class Point{
 
