@@ -4,6 +4,8 @@ import controller.states.*;
 import model.*;
 import model.shapes.CircleFactory;
 import model.shapes.RectangleFactory;
+import model.shapes.Shape;
+import controller.commands.AddShapeCommand;
 import view.MainView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -56,6 +58,25 @@ public class Controller {
 
         this.view.getToolbar().getBtnUndo().addActionListener(e -> handler.undo());
         this.view.getToolbar().getBtnRedo().addActionListener(e -> handler.redo());
+
+        this.view.getToolbar().getBtnIa().setVisible(hardModeTimer == null);
+        Ia ia = new Ia(model);
+        this.view.getToolbar().getBtnIa().addActionListener(e -> {
+            if (model.isGameOver()) return;
+            Shape shape = ia.bestFromX(200);
+            handler.executeCommand(new AddShapeCommand(shape, model));
+            if (model.isGameOver()) {
+                model.recordScore();
+                if (model.isLastRound()) {
+                    if (hardModeTimer != null) hardModeTimer.stop();
+                    view.showFinalScoreDialog();
+                } else {
+                    view.showNextRoundDialog();
+                    model.loadNextLevel();
+                    if (hardModeTimer != null) hardModeTimer.start();
+                }
+            }
+        });
     }
 
     private void setState(ControllerState newState) {

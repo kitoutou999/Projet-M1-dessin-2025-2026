@@ -15,12 +15,12 @@ public class Ia{
         Random randomNumbers = new Random();
         Shape shape = null;
         while(liste.size()<x){
-            int X1 = randomNumbers.nextInt(this.model.getCanvasHeight())+1;
-            int Y1 = randomNumbers.nextInt(this.model.getCanvasWidth())+1;
+            int X1 = randomNumbers.nextInt(this.model.getCanvasWidth())+1;
+            int Y1 = randomNumbers.nextInt(this.model.getCanvasHeight())+1;
             int shapeType = randomNumbers.nextInt(1)+1;
             if(shapeType == 1){
-                int X2 = randomNumbers.nextInt(this.model.getCanvasHeight())+1;
-                int Y2 = randomNumbers.nextInt(this.model.getCanvasWidth())+1;
+                int X2 = randomNumbers.nextInt(this.model.getCanvasWidth())+1;
+                int Y2 = randomNumbers.nextInt(this.model.getCanvasHeight())+1;
                 shape = new Rectangle(new Point(X1,Y1),new Point(X2,Y2));
             }
             if(shapeType == 2){
@@ -28,7 +28,7 @@ public class Ia{
                 int radius = randomNumbers.nextInt(100)+1;
                 shape = new Circle(new Point(X1,Y1),radius);
             }
-            if(shape.isInsideCanvas(this.model.getCanvasHeight(),this.model.getCanvasWidth()) && model.isIntersecting(shape)){
+            if(shape.isInsideCanvas(this.model.getCanvasWidth(),this.model.getCanvasHeight()) && !model.isIntersecting(shape)){
                 liste.add(shape);
             }
         }

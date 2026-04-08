@@ -23,6 +23,7 @@ public class Toolbar extends JPanel implements Observer {
     private JLabel roundLabel;
     private JLabel twoPlayerInfo;
     private JButton btnTerminer;
+    private JButton btnIa;
     private JToggleButton btnDraw;
     private JToggleButton btnScale;
     private JToggleButton btnMove;
@@ -91,9 +92,11 @@ public class Toolbar extends JPanel implements Observer {
         scorePanel.add(currentScoreText);
         scorePanel.add(twoPlayerInfo);
 
+        btnIa = new JButton("IA");
         btnTerminer = new JButton("Terminer le dessin");
         btnTerminer.setVisible(false);
         rightPanel.add(Box.createHorizontalStrut(10));
+        rightPanel.add(btnIa);
         rightPanel.add(btnTerminer);
 
         this.add(leftPanel, BorderLayout.WEST);
@@ -106,7 +109,7 @@ public class Toolbar extends JPanel implements Observer {
         allButtons.add(btnDraw); allButtons.add(btnScale);
         allButtons.add(btnMove); allButtons.add(btnRemove);
         allButtons.add(btnUndo); allButtons.add(btnRedo);
-        allButtons.add(btnTerminer);
+        allButtons.add(btnIa); allButtons.add(btnTerminer);
 
         allLabels.add(roundLabel); allLabels.add(scoreText);
         allLabels.add(currentScoreText); allLabels.add(twoPlayerInfo);
@@ -147,6 +150,7 @@ public class Toolbar extends JPanel implements Observer {
         scoreText.setVisible(false);
         currentScoreText.setVisible(false);
         twoPlayerInfo.setVisible(true);
+        btnIa.setVisible(false);
     }
 
     public void updateTwoPlayerInfo(String text) {
@@ -157,6 +161,7 @@ public class Toolbar extends JPanel implements Observer {
         btnTerminer.setVisible(visible);
     }
 
+    public JButton getBtnIa() { return btnIa; }
     public JButton getBtnTerminer() { return btnTerminer; }
     public JToggleButton getBtnCircle() { return btnCircle; }
     public JToggleButton getBtnRectangle() { return btnRectangle; }
