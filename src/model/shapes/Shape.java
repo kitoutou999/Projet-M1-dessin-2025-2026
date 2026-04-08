@@ -2,7 +2,11 @@ package model.shapes;
 
 import model.Observable;
 import model.Point;
-
+/**
+ * Interface représentant une forme géométrique quelconque.
+ * 
+ * Toutes les formes doivent implémenter les méthodes de transformation et de détection de collision.
+ */
 public abstract class Shape extends Observable {
         public abstract float getArea();
         public abstract boolean contains(Point p);

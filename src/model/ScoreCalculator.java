@@ -7,6 +7,11 @@ import java.util.List;
 
 public class ScoreCalculator {
 
+    /**
+     * Calcule le score en fonction d'à quel point on a réussi à reproduire des formes.
+     *
+     * @return le score calculé qui est un pourcentage de reproduction.
+     */
     public static float calculate(List<Shape> drawn, List<Shape> reproduced) {
         if (drawn.isEmpty()) return 0;
         float total = 0;

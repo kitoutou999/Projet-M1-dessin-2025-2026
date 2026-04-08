@@ -6,7 +6,12 @@ import model.*;
 import model.shapes.Shape;
 import view.MainView;
 import java.awt.event.MouseEvent;
-
+/**
+ * État du contrôleur permettant de supprimer une forme.
+ * 
+ * Cette classe fait partie du pattern State et définit
+ * le comportement du contrôleur lors de l'ajout de formes.
+ */
 public class RemoveState implements ControllerState {
     private GameModel model;
     private MainView view;

@@ -2,7 +2,10 @@ package model;
 
 import model.shapes.Circle;
 import model.shapes.Rectangle;
-
+/**
+ * Class pour gérer les collisions, il y a une fonction pour collisions possibles. 
+ * Elles prennent chacune 2 formes en paramètres en fonction de ce que l'on veut comparer.
+ */
 public class Collision {
 
     public static boolean collisionCircleCircle(Circle c1, Circle c2) {
