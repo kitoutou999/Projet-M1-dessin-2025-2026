@@ -4,8 +4,6 @@ import controller.HardModeTimer;
 import controller.TwoPlayerController;
 import model.*;
 import model.strategy.LevelStrategy;
-import model.strategy.PresetLevelStrategy;
-import model.strategy.RandomLevelStrategy;
 import plugin.theme.ThemeManager;
 import view.MainView;
 import view.ModeSelectionDialog;
@@ -33,11 +31,7 @@ public class Main {
     }
 
     private static void startSoloMode(GameSettings settings, ThemeManager themeManager) {
-        LevelStrategy strategy = settings.getLevelType() == LevelType.RANDOM
-                ? new RandomLevelStrategy()
-                : new PresetLevelStrategy();
-
-        GameModel model = new GameModel(strategy);
+        GameModel model = new GameModel(settings.getLevelStrategy());
         MainView view = new MainView(model, themeManager);
         CommandHandler handler = new CommandHandler();
 

@@ -21,6 +21,13 @@ public class GroupeForme extends Shape implements Observer {
         notifyObservers();
     }
 
+    public void setShapes(List<Shape> shapes) {
+        clear();
+        for (Shape s : shapes) {
+            add(s);
+        }
+    }
+
     public void remove(Shape s) {
         shapes.remove(s);
         s.removeObserver(this);

@@ -19,7 +19,7 @@ public class GameModel extends Observable {
     public static final int ROUND_COUNT     = 10;
 
     private final LevelStrategy levelStrategy;
-    private List<Shape> redShapes;
+    private GroupeForme redShapes;
     private GroupeForme blueShapes;
     private ShapeFactory shapeFactory;
     private int canvasWidth  = 1200;
@@ -33,7 +33,8 @@ public class GameModel extends Observable {
         this.levelStrategy = levelStrategy;
         this.blueShapes = new GroupeForme();
         this.shapeFactory = new CircleFactory();
-        this.redShapes = new ArrayList<>(levelStrategy.generateLevel());
+        this.redShapes = new GroupeForme();
+        this.redShapes.setShapes(levelStrategy.generateLevel());
     }
 
     public void recordScore() {
@@ -44,7 +45,7 @@ public class GameModel extends Observable {
         currentRound++;
         redShapesVisible = true;
         blueShapes.clear();
-        this.redShapes = new ArrayList<>(levelStrategy.generateLevel());
+        this.redShapes.setShapes(levelStrategy.generateLevel());
         notifyObservers();
     }
 
@@ -111,11 +112,11 @@ public class GameModel extends Observable {
     }
 
     public List<Shape> getRedShapes() {
-        return redShapesVisible ? redShapes : new ArrayList<>();
+        return redShapesVisible ? redShapes.getShapes() : new ArrayList<>();
     }
 
     public List<Shape> getAllRedShapes() {
-        return redShapes;
+        return redShapes.getShapes();
     }
 
     public boolean isRedShapesVisible() {
