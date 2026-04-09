@@ -3,7 +3,9 @@ package view;
 import model.Difficulty;
 import model.GameMode;
 import model.GameSettings;
-import model.LevelType;
+import model.strategy.LevelStrategy;
+import model.strategy.PresetLevelStrategy;
+import model.strategy.RandomLevelStrategy;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -112,8 +114,8 @@ public class ModeSelectionDialog extends JDialog {
     private void confirm() {
         GameMode mode = btnSolo.isSelected() ? GameMode.SOLO : GameMode.TWO_PLAYERS;
         Difficulty difficulty = btnHard.isSelected() ? Difficulty.HARD : Difficulty.NORMAL;
-        LevelType levelType = btnRandom.isSelected() ? LevelType.RANDOM : LevelType.PRESET;
-        result = new GameSettings(mode, difficulty, levelType);
+        LevelStrategy levelStrategy = btnRandom.isSelected() ? new RandomLevelStrategy() : new PresetLevelStrategy();
+        result = new GameSettings(mode, difficulty, levelStrategy);
         dispose();
     }
 
