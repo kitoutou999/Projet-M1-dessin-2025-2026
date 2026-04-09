@@ -1,0 +1,62 @@
+Index: run.sh
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#!/bin/bash\nshopt -s globstar\nmkdir -p out\njavac -d out src/**/*.java && cp -r src/resources out/ 2>/dev/null && java -cp out Main\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/run.sh b/run.sh
+--- a/run.sh	(revision 3c304b0a98ecb49cf3c59d17cd771d66c75f7733)
++++ b/run.sh	(date 1775648753684)
+@@ -1,4 +1,8 @@
+ #!/bin/bash
+ shopt -s globstar
+-mkdir -p out
+-javac -d out src/**/*.java && cp -r src/resources out/ 2>/dev/null && java -cp out Main
++mkdir -p out plugins plugins-src/darkmode/out
++javac -d out src/**/*.java
++cp -r src/resources out/ 2>/dev/null
++javac -cp out -d plugins-src/darkmode/out plugins-src/darkmode/**/*.java
++jar cfm plugins/darkmode.jar plugins-src/darkmode/MANIFEST.MF -C plugins-src/darkmode/out .
++java -cp out Main
+Index: compile.sh
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#!/bin/bash\nshopt -s globstar\nmkdir -p out\njavac -d out src/**/*.java\ncp -r src/resources out/ 2>/dev/null\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/compile.sh b/compile.sh
+--- a/compile.sh	(revision 3c304b0a98ecb49cf3c59d17cd771d66c75f7733)
++++ b/compile.sh	(date 1775648749160)
+@@ -1,5 +1,7 @@
+ #!/bin/bash
+ shopt -s globstar
+-mkdir -p out
++mkdir -p out plugins plugins-src/darkmode/out
+ javac -d out src/**/*.java
+ cp -r src/resources out/ 2>/dev/null
++javac -cp out -d plugins-src/darkmode/out plugins-src/darkmode/**/*.java
++jar cfm plugins/darkmode.jar plugins-src/darkmode/MANIFEST.MF -C plugins-src/darkmode/out .
+Index: .gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>### IntelliJ IDEA ###\nout/\n!**/src/main/**/out/\n!**/src/test/**/out/\n.kotlin\n\n### Eclipse ###\n.apt_generated\n.classpath\n.factorypath\n.project\n.settings\n.springBeans\n.sts4-cache\nbin/\n!**/src/main/**/bin/\n!**/src/test/**/bin/\n\n### NetBeans ###\n/nbproject/private/\n/nbbuild/\n/dist/\n/nbdist/\n/.nb-gradle/\n\n### VS Code ###\n.vscode/\n\n### Mac OS ###\n.DS_Store
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.gitignore b/.gitignore
+--- a/.gitignore	(revision 3c304b0a98ecb49cf3c59d17cd771d66c75f7733)
++++ b/.gitignore	(date 1775648466689)
+@@ -27,4 +27,8 @@
+ .vscode/
+ 
+ ### Mac OS ###
+-.DS_Store
+\ No newline at end of file
++.DS_Store
++
++### Projet ###
++plugins/*.jar
++plugins-src/darkmode/out/
+\ No newline at end of file
